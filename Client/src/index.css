@@ -16,3 +16,16 @@ button {
   padding: 0;
   margin: 0;
 }
+
+input {
+  height: 40px;
+  /* border: 1px solid #6a6a6a !important; */
+  border-radius: 2px;
+}
+.ant-form-item {
+  margin-bottom: 0px !important;
+}
+a:hover {
+  text-decoration: underline !important;
+  color: red;
+}
