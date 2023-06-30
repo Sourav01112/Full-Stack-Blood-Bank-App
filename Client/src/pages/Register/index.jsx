@@ -17,7 +17,7 @@ export const Register = () => {
 
   return (
     <div
-      className={`flex h-screen items-center justify-center bg-no-repeat bg-left bg-contain ${backgroundClasses}`}
+      className={`flex h-screen items-center justify-center bg-repeat bg-contain  ${backgroundClasses}`}
       style={{ backgroundImage: `url(${registerImage})` }}
     >
       <Form
@@ -26,7 +26,8 @@ export const Register = () => {
         onFinish={onFinish}
       >
         <h1 className="col-span-2 uppercase text-2xl">
-          <span>{type.toUpperCase()} - registration</span>
+          {type.toUpperCase()} -{" "}
+          <span className="text-red-500 px-2">registration</span>
           <hr />
         </h1>
 
