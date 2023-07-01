@@ -1,7 +1,8 @@
-import { Button, Form, Input, Checkbox, Col, Row, Select, Radio } from "antd";
+import { Button, Form, Input, Checkbox, Col, Row, Select, Radio, message } from "antd";
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import LoginImage1 from "../../assets/LoginImage1.jpg";
+import { LoginUser } from "../../api/users";
 
 export const Login = () => {
   const [type, setType] = useState("donor");
@@ -10,8 +11,17 @@ export const Login = () => {
   const isDesiredRoute = location.pathname === "/login";
   const backgroundClasses = isDesiredRoute ? "bg-wallpaper" : "";
 
-  const onFinish = (values) => {
-    console.log(values);
+  const onFinish = async (values) => {
+    try {
+      const response = await LoginUser({ ...values });
+      if (response.success) {
+        message.success(response.message);
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
   };
 
   return (
@@ -59,7 +69,7 @@ export const Login = () => {
           className="uppercase bg-black"
           htmlType="submit"
         >
-          Sign Up
+          LOGIN
         </Button>
         <Link to="/register" className=" text-center text-gray-500">
           Already have an account? Register

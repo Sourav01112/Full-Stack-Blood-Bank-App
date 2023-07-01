@@ -16,7 +16,7 @@ export const Register = () => {
     try {
       const response = await RegisteredUser({
         ...values,
-        userType: type,
+        userType: type, // due to userType in model assigning userType as type here in FE
       });
       if (response.success) {
         message.success(response.message);

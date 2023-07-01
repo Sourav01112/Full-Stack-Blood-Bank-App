@@ -1,17 +1,18 @@
 const express = require("express");
 const { connection } = require("./config/db");
 const app = express();
+const cors = require("cors");
+const { usersRouter } = require("./routes/user.routes");
+const Port = process.env.PORT || 4500;
 
-const Port = process.env.PORT || 5000;
-const userRoutes = require("./routes/user.routes");
-app.use(express.json());
-
+app.use(express.json()); //to access request.body variables
+app.use(cors());
 
 // User Routes
-app.use("/api/users", userRoutes);
+app.use("/users", usersRouter);
 
 // Server connection
-app.listen(async () => {
+app.listen(Port, async () => {
   try {
     await connection;
     console.log("Mogno Atlas Connected");

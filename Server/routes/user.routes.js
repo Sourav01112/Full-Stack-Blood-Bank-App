@@ -1,11 +1,12 @@
-const router = require("express").Router();
+const express = require("express");
+const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const UserModel = require("../model/user.model");
 require("dotenv").config();
 // register
 
-router.post("/register", async (req, res) => {
+usersRouter.post("/register", async (req, res) => {
   try {
     const { email, password } = req.body;
     // user exits already ?
@@ -13,7 +14,8 @@ router.post("/register", async (req, res) => {
     if (userExists) {
       return res.send({
         success: false,
-        message: "User already exists in the database try with new email",
+        message:
+          "User already exists in the database. Try with fresh credentials",
       });
     }
 
@@ -34,7 +36,7 @@ router.post("/register", async (req, res) => {
 });
 
 // login
-router.post("/login", async (req, res) => {
+usersRouter.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     const userExists = await UserModel.findOne({ email });
@@ -83,4 +85,4 @@ router.post("/login", async (req, res) => {
 
 // export
 
-module.exports = router;
+module.exports = { usersRouter };
