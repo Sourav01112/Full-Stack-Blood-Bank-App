@@ -11,7 +11,7 @@ router.post("/register", async (req, res) => {
     // user exits already ?
     const userExists = await UserModel.findOne({ email });
     if (userExists) {
-      return res.json({
+      return res.send({
         success: false,
         message: "User already exists in the database try with new email",
       });
@@ -21,12 +21,12 @@ router.post("/register", async (req, res) => {
     const hashedPass = await bcrypt.hash(password, salt);
     const newUser = new UserModel({ ...req.body, password: hashedPass });
     await newUser.save();
-    res.send({
+    res.status(200).send({
       success: true,
       message: "user has been registered successfully",
     });
   } catch (err) {
-    return res.json({
+    return res.status(400).send({
       success: false,
       message: err.message,
     });
@@ -43,7 +43,7 @@ router.post("/login", async (req, res) => {
     if (!userExists) {
       return res
         .status(401)
-        .json({ success: false, message: "invalid username or password" });
+        .send({ success: false, message: "invalid username or password" });
     }
 
     // comparing
@@ -52,7 +52,7 @@ router.post("/login", async (req, res) => {
     if (!validPassword) {
       return res
         .status(401)
-        .json({ success: false, message: "Inavlid Password" });
+        .send({ success: false, message: "Inavlid Password" });
     }
 
     // Generating Token
@@ -67,14 +67,14 @@ router.post("/login", async (req, res) => {
         expiresIn: "1d",
       }
     );
-    res.status(200).json({
+    res.status(200).send({
       success: true,
-      msg: "User logged in successfully",
+      message: "User logged in successfully",
       user: userExists,
       token: accessToken,
     });
   } catch (err) {
-    return res.status(400).json({
+    return res.status(400).send({
       success: false,
       message: err.message,
     });

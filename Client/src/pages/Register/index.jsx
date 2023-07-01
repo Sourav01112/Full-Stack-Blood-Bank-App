@@ -1,8 +1,9 @@
-import { Button, Form, Input, Checkbox, Col, Row, Select } from "antd";
+import { Button, Form, Input, Checkbox, Col, Row, Select, message } from "antd";
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import registerImage from "../../assets/register.jpg";
 import { Hospital } from "./Hospital";
+import { RegisteredUser } from "../../api/users";
 
 export const Register = () => {
   const [type, setType] = useState("donor");
@@ -11,8 +12,20 @@ export const Register = () => {
   const isDesiredRoute = location.pathname === "/register";
   const backgroundClasses = isDesiredRoute ? "bg-wallpaper" : "";
 
-  const onFinish = (values) => {
-    console.log(values);
+  const onFinish = async (values) => {
+    try {
+      const response = await RegisteredUser({
+        ...values,
+        userType: type,
+      });
+      if (response.success) {
+        message.success(response.message);
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
   };
 
   return (
