@@ -7,11 +7,11 @@ import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ConfigProvider
-    theme={{
-      token: {
-        colorPrimary: "#00b96b",
-      },
-    }}
+    // theme={{
+    //   token: {
+    //     colorPrimary: "#00b96b",
+    //   },
+    // }}
   >
     <BrowserRouter>
       <App />

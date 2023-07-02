@@ -33,11 +33,11 @@ const userSchema = new mongoose.Schema(
       },
     },
 
-    // is required only if the userType is Organisation
-    organisationName: {
+    // is required only if the userType is organization
+    organizationName: {
       type: String,
       required: function () {
-        if (this.userType === "organisation") {
+        if (this.userType === "organization") {
           return true;
         } else {
           return false;
@@ -45,11 +45,11 @@ const userSchema = new mongoose.Schema(
       },
     },
 
-    // is required only if the userType is Organisation & hospital
+    // is required only if the userType is organization & hospital
     website: {
       type: String,
       required: function () {
-        if (this.userType === "organisation" || this.userType === "hospital") {
+        if (this.userType === "organization" || this.userType === "hospital") {
           return true;
         } else {
           return false;
@@ -57,11 +57,11 @@ const userSchema = new mongoose.Schema(
       },
     },
 
-    // is required only if the userType is Organisation & hospital
+    // is required only if the userType is organization & hospital
     address: {
       type: String,
       required: function () {
-        if (this.userType === "organisation" || this.userType === "hospital") {
+        if (this.userType === "organization" || this.userType === "hospital") {
           return true;
         } else {
           return false;
@@ -89,7 +89,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
   },
-  
+
   //Time Stamp
   {
     timestamps: true,

@@ -1,10 +1,26 @@
 import { axiosInstance } from ".";
 
 export const RegisteredUser = async (payload) => {
-  const response = await axiosInstance("post", "http://localhost:4500/users/register", payload);
+  const response = await axiosInstance(
+    "post",
+    "http://localhost:4500/users/register",
+    payload
+  );
   return response;
 };
 export const LoginUser = async (payload) => {
-  const response = await axiosInstance("post", "http://localhost:4500/users/login", payload);
+  const response = await axiosInstance(
+    "post",
+    "http://localhost:4500/users/login",
+    payload
+  );
+  return response;
+};
+
+export const GetCurrentUser = async () => {
+  const response = await axiosInstance(
+    "get",
+    "http://localhost:4500/users/get-current-user"
+  );
   return response;
 };

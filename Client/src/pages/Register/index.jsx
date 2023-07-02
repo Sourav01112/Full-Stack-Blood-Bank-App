@@ -1,12 +1,15 @@
 import { Button, Form, Input, Checkbox, Col, Row, Select, message } from "antd";
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import registerImage from "../../assets/register.jpg";
 import { Hospital } from "./Hospital";
 import { RegisteredUser } from "../../api/users";
+import { useForm } from "antd/es/form/Form";
 
 export const Register = () => {
   const [type, setType] = useState("donor");
+  const navigate = useNavigate();
+  const [form] = useForm();
 
   const location = useLocation();
   const isDesiredRoute = location.pathname === "/register";
@@ -20,6 +23,9 @@ export const Register = () => {
       });
       if (response.success) {
         message.success(response.message);
+        form.resetFields();
+
+        // navigate("/login");
       } else {
         throw new Error(response.message);
       }
@@ -28,12 +34,21 @@ export const Register = () => {
     }
   };
 
+  // won't show login and register page if the user has logged in (loginToken is present in LS)
+
+  useEffect(() => {
+    if (localStorage.getItem("login-Token")) {
+      message.info("You are already Registered!");
+      navigate("/");
+    }
+  }, []);
   return (
     <div
       className={`flex h-screen items-center justify-center bg-repeat bg-contain  ${backgroundClasses}`}
       style={{ backgroundImage: `url(${registerImage})` }}
     >
       <Form
+        form={form}
         layout="vertical"
         className="bg-white rounded shadow grid grid-cols-2 p-5 gap-5 w-1/2"
         onFinish={onFinish}
@@ -59,7 +74,7 @@ export const Register = () => {
               <Checkbox value="hospital">Hospital</Checkbox>
             </Col>
             <Col span={8}>
-              <Checkbox value="org">Organisation</Checkbox>
+              <Checkbox value="org">organization</Checkbox>
             </Col>
           </Row>
         </Checkbox.Group> */}
@@ -99,17 +114,53 @@ export const Register = () => {
 
         {type === "donor" && (
           <>
-            <Form.Item label="Name" name="name">
+            <Form.Item
+              label="Name"
+              name="name"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter your name!",
+                },
+              ]}
+            >
               <Input />
             </Form.Item>
-            <Form.Item label="Email" name="email">
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter your email!",
+                },
+              ]}
+            >
               <Input />
             </Form.Item>
-            <Form.Item label="Phone" name="phone">
+            <Form.Item
+              label="Phone"
+              name="phone"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter your phone!",
+                },
+              ]}
+            >
               <Input type="number" />
             </Form.Item>
-            <Form.Item label="Password" name="password">
-              <Input type="password" />
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter your password!",
+                },
+              ]}
+            >
+              <Input.Password className="custom-password-input" />
             </Form.Item>
           </>
         )}

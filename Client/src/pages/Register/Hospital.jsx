@@ -7,27 +7,82 @@ export const Hospital = ({ type }) => {
     <>
       <Form.Item
         label={type === "hospital" ? "Hospital Name" : "Organization Name"}
-        name={type === "hospital" ? "Hospital Name" : "Organization Name"}
+        name={type === "hospital" ? "hospitalName" : "organizationName"}
       >
         <Input />
       </Form.Item>
-      <Form.Item label="Owner" name="owner">
+      <Form.Item
+        label="Owner"
+        name="owner"
+        rules={[
+          {
+            required: true,
+            message: "Please enter your owner!",
+          },
+        ]}
+      >
         <Input />
       </Form.Item>
-      <Form.Item label="Email" name="email">
+      <Form.Item
+        label="Email"
+        name="email"
+        rules={[
+          {
+            required: true,
+            message: "Please enter your email!",
+          },
+        ]}
+      >
         <Input />
       </Form.Item>
-      <Form.Item label="Phone" name="phone">
+      <Form.Item
+        label="Phone"
+        name="phone"
+        rules={[
+          {
+            required: true,
+            message: "Please enter your phone!",
+          },
+        ]}
+      >
         <Input type="number" />
       </Form.Item>
-      <Form.Item label="Website" name="website">
+      <Form.Item
+        label="Website"
+        name="website"
+        rules={[
+          {
+            required: true,
+            message: "Please enter your website!",
+          },
+        ]}
+      >
         <Input />
       </Form.Item>
-      <Form.Item label="Password" name="password">
-        <Input type="password" />
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[
+          {
+            required: true,
+            message: "Please enter your password!",
+          },
+        ]}
+      >
+        <Input.Password className="custom-password-input" />
       </Form.Item>
-      <Form.Item label="Address" name="address" className="col-span-2">
-        <TextArea />
+      <Form.Item
+        label="Address"
+        name="address"
+        className="col-span-2"
+        rules={[
+          {
+            required: true,
+            message: "Please enter your address!",
+          },
+        ]}
+      >
+        <TextArea className="custom-password-input" />
       </Form.Item>
     </>
   );

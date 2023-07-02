@@ -3,6 +3,7 @@ const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const UserModel = require("../model/user.model");
+const { authMiddleware } = require("../middleware/auth.middleware");
 require("dotenv").config();
 // register
 
@@ -52,9 +53,11 @@ usersRouter.post("/login", async (req, res) => {
 
     const validPassword = await bcrypt.compare(password, userExists.password);
     if (!validPassword) {
-      return res
-        .status(401)
-        .send({ success: false, message: "Inavlid Password" });
+      return (
+        res
+          // .status(401)
+          .send({ success: false, message: "Inavlid Password" })
+      );
     }
 
     // Generating Token
@@ -75,10 +78,41 @@ usersRouter.post("/login", async (req, res) => {
       user: userExists,
       token: accessToken,
     });
+    // console.log("@@", user, token);
   } catch (err) {
+    // console.log("err.message", err.message);
     return res.status(400).send({
       success: false,
       message: err.message,
+    });
+  }
+});
+
+// getCurrentUSer
+usersRouter.get("/get-current-user", authMiddleware, async (req, res) => {
+  try {
+    // 1. Descrypting JWT Token
+    // 2. Getting info from MongoDb and sending to FE
+    const isUser = await UserModel.findOne({ _id: req.body.userID });
+
+    // Remove password from isUser object
+    // isUser.password = undefined;
+    if (isUser) {
+      res.status(200).json({
+        success: true,
+        message: "User fetched successfully",
+        data: isUser,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: error.message,
     });
   }
 });
