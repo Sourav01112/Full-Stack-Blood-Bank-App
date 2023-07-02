@@ -15,8 +15,6 @@ export const ProtectedPage = ({ children }) => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((store) => store.users);
   // above users is coming from store.js
-  const { isLoading } = useSelector((store) => store.loaders);
-  console.log("1", isLoading);
 
   const getCurrentUser = async () => {
     try {
@@ -54,9 +52,44 @@ export const ProtectedPage = ({ children }) => {
   return (
     currentUser && (
       <div>
+        {/* {header} */}
+        <div className=" flex justify-between  bg-blue-700 text-white px-5 py-4">
+          <h1 className="text-2xl">Sourav Blood Bank</h1>
+          {/*  Middle */}
+          <div className="flex justify-around">
+            <i className="ri-hand-heart-fill"></i>
+            <span className="text-xs">
+              {currentUser.userType.toUpperCase()}
+            </span>
+          </div>
+
+          <div className="flex items-center">
+            <i className="ri-user-3-line mr-3"></i>
+            <div className="flex flex-col">
+              <span className="mr-5 text-xl cursor-pointer">
+                {getLoggedInUserName(currentUser).toUpperCase()}
+              </span>
+            </div>
+            {/* LOGOUT */}
+            <i
+              className="ri-logout-box-r-line ml-5 cursor-pointer"
+              onClick={() => {
+                dispatch(SetLoading(true));
+                setTimeout(() => {
+                  localStorage.clear("login-Token");
+                  dispatch(SetLoading(false));
+                  navigate("/login");
+                }, 1000);
+              }}
+            ></i>
+          </div>
+        </div>
+
         {/*  importing helper.js function  */}
-        <h1>Welcome {getLoggedInUserName(currentUser)}</h1>
-        {children}
+        {/* <h1>Welcome {getLoggedInUserName(currentUser)}</h1> */}
+
+        {/* BODY */}
+        <div className="p-5">{children}</div>
       </div>
     )
   );
