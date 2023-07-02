@@ -11,3 +11,12 @@ export const getLoggedInUserName = (user) => {
     return user.organizationName;
   }
 };
+
+export const getAndDesignValidation = () => {
+  return [
+    {
+      required: true,
+      message: "Required Field",
+    },
+  ];
+};

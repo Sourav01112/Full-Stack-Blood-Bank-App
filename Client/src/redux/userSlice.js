@@ -4,6 +4,7 @@ const userSlice = createSlice({
   name: "users",
   initialState: {
     currentUser: null,
+    isLoading: false
   },
   reducers: {
     // here, 1st letter will be in capital

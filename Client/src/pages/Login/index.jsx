@@ -14,11 +14,15 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import LoginImage1 from "../../assets/LoginImage1.jpg";
 import { LoginUser } from "../../api/users";
 import { useForm } from "antd/es/form/Form";
+import { useDispatch } from "react-redux";
+import { SetLoading } from "../../redux/loaderSlice";
+import { getAndDesignValidation } from "../../utils/helpers";
 
 export const Login = () => {
   const [type, setType] = useState("donor");
   const [form] = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const location = useLocation();
   const isDesiredRoute = location.pathname === "/login";
@@ -27,35 +31,31 @@ export const Login = () => {
   const onFinish = async (values) => {
     const { email, password } = values;
 
-    // Check if both email and password are missing
-    if (!email && !password) {
-      message.error("Please fill in the details");
-      return;
-    } else if (!password) {
-      message.error("Please fill password");
-      form.resetFields();
-
-      return;
-    } else if (!email) {
-      message.error("Email cannot be empty!");
-      form.resetFields();
-
-      return;
-    }
-
     try {
+      // loading state
+      dispatch(SetLoading(true));
+
+      // delay of 1 second
+      await new Promise((resolve) => setTimeout(resolve, 700));
+      // Check if both email and password are missing
+
+      if (!password) {
+        message.error("Please fill password");
+        form.resetFields();
+        return;
+      } else if (!email) {
+        message.error("Email cannot be empty!");
+        form.resetFields();
+        return;
+      }
+
+      // dispatch(SetLoading(true));
       const response = await LoginUser(values);
       // console.log("This is response", response);
-
-      // if (!type) {
-      //    message.error("Please fill the details");
-      // }
-
+      dispatch(SetLoading(false));
       if (response.success) {
         message.success(response.message);
-
         localStorage.setItem("login-Token", response.token);
-        setType(null);
         form.resetFields();
         navigate("/");
       } else if (!type) {
@@ -69,10 +69,13 @@ export const Login = () => {
         // message.warning(response.message);
       }
     } catch (error) {
+      dispatch(SetLoading(false));
       message.error(error.message);
       form.resetFields();
+    } finally {
+      //  loading state : false
+      dispatch(SetLoading(false));
     }
-    setType("");
   };
 
   // won't show login and register page if the user has logged in (loginToken is present in LS)
@@ -116,11 +119,15 @@ export const Login = () => {
           <Radio value="organization">organization</Radio>
         </Radio.Group>
 
-        <Form.Item label="Email" name="email">
+        <Form.Item label="Email" name="email" rules={getAndDesignValidation()}>
           <Input />
         </Form.Item>
 
-        <Form.Item label="Password" name="password">
+        <Form.Item
+          label="Password"
+          name="password"
+          // rules={getAndDesignValidation()}
+        >
           <Input.Password className="custom-password-input" />
         </Form.Item>
 

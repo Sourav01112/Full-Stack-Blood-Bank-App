@@ -1,73 +1,39 @@
 import { Form, Input } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import React from "react";
+import { getAndDesignValidation } from "../../utils/helpers";
 
 export const Hospital = ({ type }) => {
+
   return (
     <>
       <Form.Item
         label={type === "hospital" ? "Hospital Name" : "Organization Name"}
         name={type === "hospital" ? "hospitalName" : "organizationName"}
+        rules={getAndDesignValidation()}
       >
         <Input />
       </Form.Item>
-      <Form.Item
-        label="Owner"
-        name="owner"
-        rules={[
-          {
-            required: true,
-            message: "Please enter your owner!",
-          },
-        ]}
-      >
+      <Form.Item label="Owner" name="owner" rules={getAndDesignValidation()}>
         <Input />
       </Form.Item>
-      <Form.Item
-        label="Email"
-        name="email"
-        rules={[
-          {
-            required: true,
-            message: "Please enter your email!",
-          },
-        ]}
-      >
+      <Form.Item label="Email" name="email" rules={getAndDesignValidation()}>
         <Input />
       </Form.Item>
-      <Form.Item
-        label="Phone"
-        name="phone"
-        rules={[
-          {
-            required: true,
-            message: "Please enter your phone!",
-          },
-        ]}
-      >
+      <Form.Item label="Phone" name="phone" rules={getAndDesignValidation()}>
         <Input type="number" />
       </Form.Item>
       <Form.Item
         label="Website"
         name="website"
-        rules={[
-          {
-            required: true,
-            message: "Please enter your website!",
-          },
-        ]}
+        rules={getAndDesignValidation()}
       >
         <Input />
       </Form.Item>
       <Form.Item
         label="Password"
         name="password"
-        rules={[
-          {
-            required: true,
-            message: "Please enter your password!",
-          },
-        ]}
+        rules={getAndDesignValidation()}
       >
         <Input.Password className="custom-password-input" />
       </Form.Item>
@@ -75,12 +41,7 @@ export const Hospital = ({ type }) => {
         label="Address"
         name="address"
         className="col-span-2"
-        rules={[
-          {
-            required: true,
-            message: "Please enter your address!",
-          },
-        ]}
+        rules={getAndDesignValidation()}
       >
         <TextArea className="custom-password-input" />
       </Form.Item>

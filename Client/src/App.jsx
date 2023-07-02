@@ -5,21 +5,29 @@ import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { ProtectedPage } from "./components/ProtectedPage";
+import { useSelector } from "react-redux";
+import { LoadingSpinner } from "./components/LoadingSpinner";
 
 function App() {
+  const { isLoading } = useSelector((store) => store.loaders);
+  // console.log(isLoading);
+
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <ProtectedPage>
-            <Home />
-          </ProtectedPage>
-        }
-      />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-    </Routes>
+    <div>
+      {isLoading && <LoadingSpinner />}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ProtectedPage>
+              <Home />
+            </ProtectedPage>
+          }
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </div>
   );
 }
 

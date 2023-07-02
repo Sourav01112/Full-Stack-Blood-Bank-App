@@ -5,11 +5,16 @@ import registerImage from "../../assets/register.jpg";
 import { Hospital } from "./Hospital";
 import { RegisteredUser } from "../../api/users";
 import { useForm } from "antd/es/form/Form";
+import { getAndDesignValidation } from "../../utils/helpers";
+import { useDispatch, useSelector } from "react-redux";
+import { SetLoading } from "../../redux/loaderSlice";
 
 export const Register = () => {
   const [type, setType] = useState("donor");
   const navigate = useNavigate();
   const [form] = useForm();
+  const dispatch = useDispatch();
+
 
   const location = useLocation();
   const isDesiredRoute = location.pathname === "/register";
@@ -17,15 +22,19 @@ export const Register = () => {
 
   const onFinish = async (values) => {
     try {
+      dispatch(SetLoading(true));
+
       const response = await RegisteredUser({
         ...values,
         userType: type, // due to userType in model assigning userType as type here in FE
       });
+      dispatch(SetLoading(false));
+
       if (response.success) {
         message.success(response.message);
         form.resetFields();
 
-        // navigate("/login");
+        navigate("/login");
       } else {
         throw new Error(response.message);
       }
@@ -58,26 +67,6 @@ export const Register = () => {
           <span className="text-red-500 px-2">registration</span>
           <hr />
         </h1>
-
-        {/* <Checkbox.Group
-          className="col-span-2"
-          style={{
-            width: "100%",
-          }}
-          onChange={() => setType(e.target.value)}
-        >
-          <Row>
-            <Col span={8}>
-              <Checkbox value="donor">Donor</Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox value="hospital">Hospital</Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox value="org">organization</Checkbox>
-            </Col>
-          </Row>
-        </Checkbox.Group> */}
 
         <Select
           className="col-span-2"
@@ -117,48 +106,28 @@ export const Register = () => {
             <Form.Item
               label="Name"
               name="name"
-              rules={[
-                {
-                  required: true,
-                  message: "Please enter your name!",
-                },
-              ]}
+              rules={getAndDesignValidation()}
             >
               <Input />
             </Form.Item>
             <Form.Item
               label="Email"
               name="email"
-              rules={[
-                {
-                  required: true,
-                  message: "Please enter your email!",
-                },
-              ]}
+              rules={getAndDesignValidation()}
             >
               <Input />
             </Form.Item>
             <Form.Item
               label="Phone"
               name="phone"
-              rules={[
-                {
-                  required: true,
-                  message: "Please enter your phone!",
-                },
-              ]}
+              rules={getAndDesignValidation()}
             >
               <Input type="number" />
             </Form.Item>
             <Form.Item
               label="Password"
               name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "Please enter your password!",
-                },
-              ]}
+              rules={getAndDesignValidation()}
             >
               <Input.Password className="custom-password-input" />
             </Form.Item>
