@@ -10,13 +10,21 @@ require("dotenv").config();
 usersRouter.post("/register", async (req, res) => {
   try {
     const { email, password } = req.body;
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
     // user exits already ?
     const userExists = await UserModel.findOne({ email });
+    // console.log(userExists, '@user');
     if (userExists) {
       return res.send({
         success: false,
         message:
           "User already exists in the database. Try with fresh credentials",
+      });
+    }
+    if (!passwordRegex.test(password)) {
+      return res.status(400).send({
+        message:
+          "Password must contain at least 8 characters, including at least 1 number, 1 lowercase letter, and 1 uppercase letter.",
       });
     }
 
@@ -41,6 +49,7 @@ usersRouter.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     const userExists = await UserModel.findOne({ email });
+    // console.log(userExists, "@usewr");
 
     // user exits already ?
     if (!userExists) {

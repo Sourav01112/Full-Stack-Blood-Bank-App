@@ -1,14 +1,4 @@
-import {
-  Button,
-  Form,
-  Input,
-  Checkbox,
-  Col,
-  Row,
-  Select,
-  Radio,
-  message,
-} from "antd";
+import { Button, Form, Input, Radio, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LoginImage1 from "../../assets/LoginImage1.jpg";
@@ -105,7 +95,6 @@ export const Login = () => {
         </h1>
 
         <Radio.Group
-          className=""
           style={{
             width: "100%",
           }}
@@ -119,29 +108,58 @@ export const Login = () => {
           <Radio value="organization">organization</Radio>
         </Radio.Group>
 
-        <Form.Item label="Email" name="email" rules={getAndDesignValidation()}>
-          <Input />
+        <Form.Item
+          label="Email"
+          name="email"
+          hasFeedback
+          rules={[
+            { type: "email", message: "Invalid E-mail" },
+            ...getAndDesignValidation(),
+          ]}
+        >
+          <Input className="custom-password-input" />
         </Form.Item>
 
         <Form.Item
           label="Password"
           name="password"
-          // rules={getAndDesignValidation()}
+          hasFeedback
+          rules={[{ min: 6 }, ...getAndDesignValidation()]}
+
+          // dependencies={["password"]}
+          // rules={[
+          //   { required: true, message: "Confirm Password required." },
+          //   { min: 6 },
+          //   ({ getFieldValue }) => ({
+          //     validator(_, value) {
+          //       if (!value || getFieldValue("password") == value) {
+          //         return Promise.resolve();
+          //       }
+          //       return Promise.reject("Password not matching.");
+          //     },
+          //   }),
+          // ]}
         >
           <Input.Password className="custom-password-input" />
         </Form.Item>
+        <div className="flex flex-col items-center ml-20 w-full">
+          <Button
+            type="primary"
+            block
+            className="uppercase bg-black w-full"
+            htmlType="submit"
+          >
+            LOGIN
+          </Button>
 
-        <Button
-          type="primary"
-          block
-          className="uppercase bg-black"
-          htmlType="submit"
-        >
-          LOGIN
-        </Button>
-        <Link to="/register" className=" text-center text-gray-500">
-          Already have an account? Register
-        </Link>
+          <Link to="/register" className=" text-center text-gray-500">
+            Already have an account?{" "}
+            <strong className="text-red-500">Register</strong>
+          </Link>
+          <Link to="/forgotPassword" className="text-center text-black">
+            Forgot Password ? <strong>Click Here</strong>
+          </Link>
+        </div>
       </Form>
     </div>
   );

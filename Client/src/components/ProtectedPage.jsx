@@ -54,7 +54,18 @@ export const ProtectedPage = ({ children }) => {
       <div>
         {/* {header} */}
         <div className=" flex justify-between  bg-blue-700 text-white px-5 py-4">
-          <h1 className="text-2xl">Sourav Blood Bank</h1>
+          <h1
+            className="text-2xl"
+            onClick={() => {
+              dispatch(SetLoading(true));
+              setTimeout(() => {
+                dispatch(SetLoading(false));
+                navigate("/");
+              }, 600);
+            }}
+          >
+            Sourav Blood Bank
+          </h1>
           {/*  Middle */}
           <div className="flex justify-around">
             <i className="ri-hand-heart-fill"></i>
@@ -66,7 +77,10 @@ export const ProtectedPage = ({ children }) => {
           <div className="flex items-center">
             <i className="ri-user-3-line mr-3"></i>
             <div className="flex flex-col">
-              <span className="mr-5 text-xl cursor-pointer">
+              <span
+                className="mr-5 text-xl cursor-pointer"
+                onClick={() => navigate("/profile")}
+              >
                 {getLoggedInUserName(currentUser).toUpperCase()}
               </span>
             </div>
@@ -79,6 +93,7 @@ export const ProtectedPage = ({ children }) => {
                   localStorage.clear("login-Token");
                   dispatch(SetLoading(false));
                   navigate("/login");
+                  message.success("You are successfully logged Out!");
                 }, 1000);
               }}
             ></i>

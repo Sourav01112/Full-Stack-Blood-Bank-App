@@ -113,7 +113,10 @@ export const Register = () => {
             <Form.Item
               label="Email"
               name="email"
-              rules={getAndDesignValidation()}
+              rules={[
+                { type: "email", message: "Invalid E-mail" },
+                ...getAndDesignValidation(),
+              ]}
             >
               <Input />
             </Form.Item>
@@ -127,7 +130,7 @@ export const Register = () => {
             <Form.Item
               label="Password"
               name="password"
-              rules={getAndDesignValidation()}
+              rules={[{ min: 6 }, ...getAndDesignValidation()]}
             >
               <Input.Password className="custom-password-input" />
             </Form.Item>
