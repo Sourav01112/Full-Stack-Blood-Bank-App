@@ -13,7 +13,6 @@ export const Login = () => {
   const [form] = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const location = useLocation();
   const isDesiredRoute = location.pathname === "/login";
   const backgroundClasses = isDesiredRoute ? "bg-wallpaper" : "";
@@ -40,7 +39,10 @@ export const Login = () => {
       }
 
       // dispatch(SetLoading(true));
-      const response = await LoginUser(values);
+      const response = await LoginUser({
+        ...values,
+        userType: type,
+      });
       // console.log("This is response", response);
       dispatch(SetLoading(false));
       if (response.success) {
@@ -85,7 +87,7 @@ export const Login = () => {
       <Form
         form={form}
         layout="vertical"
-        className="bg-white rounded grid grid-cols-2 shadow p-10 gap-5 w-1/2"
+        className="bg-white rounded grid grid-cols-2 shadow p-10 gap-5 w-45"
         onFinish={onFinish}
       >
         <h1 className="col-span-1 uppercase text-2xl">
@@ -105,7 +107,7 @@ export const Login = () => {
 
           <Radio value="hospital">Hospital</Radio>
 
-          <Radio value="organization">organization</Radio>
+          <Radio value="organization">Organization</Radio>
         </Radio.Group>
 
         <Form.Item

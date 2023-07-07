@@ -49,13 +49,20 @@ usersRouter.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     const userExists = await UserModel.findOne({ email });
-    // console.log(userExists, "@usewr");
+    // console.log(userExists, "@user");
 
     // user exits already ?
     if (!userExists) {
       return res
         .status(401)
         .send({ success: false, message: "invalid username or password" });
+    }
+    // userType is matching
+    if (userExists.userType !== req.body.userType) {
+      return res.send({
+        success: false,
+        message: `User is not registered as ${req.body.userType}`,
+      });
     }
 
     // comparing

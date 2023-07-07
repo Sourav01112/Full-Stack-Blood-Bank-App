@@ -78,7 +78,7 @@ export const Register = () => {
             label: "Donor",
           }}
           onChange={(value) => {
-            console.log(value);
+            // console.log(value);
             setType(value);
           }}
           // onSearch={onSearch}

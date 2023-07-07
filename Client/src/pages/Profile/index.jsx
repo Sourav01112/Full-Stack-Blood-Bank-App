@@ -6,7 +6,7 @@ const { TabPane } = Tabs;
 
 export const Profile = () => {
   const { currentUser } = useSelector((store) => store.users);
-  console.log(currentUser);
+  // console.log(currentUser);
   const [size, setSize] = useState("medium");
 
   // useEffect(() => {}, []);

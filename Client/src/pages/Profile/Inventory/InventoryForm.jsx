@@ -14,7 +14,7 @@ function InventoryForm({ open, setOpen, reloadData }) {
   const dispatch = useDispatch();
 
   const onFinish = async (values) => {
-    console.log(values);
+    // console.log(values);
     try {
       dispatch(SetLoading(true));
       const response = await AddInventory({

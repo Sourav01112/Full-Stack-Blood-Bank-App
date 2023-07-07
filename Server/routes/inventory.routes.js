@@ -6,14 +6,14 @@ const InventoryModel = require("../model/inventory.model");
 
 // Add Inventory
 
-inventoryRouter.post("/add", async (req, res) => {
+inventoryRouter.post("/add", authMiddleware, async (req, res) => {
   const { email } = req.body;
   try {
     // based on email and inventoryType : Validation
     // fetch user
 
     const user = await UserModel.findOne({ email });
-    console.log("@@@@@@@@@@", user.userType);
+    // console.log("@@@@@@@@@@", user.userType);
     // checks
     if (!user) throw new Error("Invalid Email");
     if (req.body.inventoryType === "Donation-In" && user.userType !== "donor") {
@@ -28,6 +28,11 @@ inventoryRouter.post("/add", async (req, res) => {
     //  saving ID as per Inventory Type
 
     if (req.body.inventoryType === "Donation-Out") {
+      // validation for Out : If we have A+ : 100ML and we are sending 120ML out, it should throw error
+      const requestedBloodGroup = req.body.bloodGroup;
+      const requestedQuantity = req.body.quantity;
+      const oraganization = req.body.userID;
+
       req.body.hospital = user._id;
     } else {
       req.body.donor = user._id;
@@ -39,6 +44,28 @@ inventoryRouter.post("/add", async (req, res) => {
     res.status(200).send({
       success: true,
       message: "Inventory has been added successfully",
+    });
+  } catch (error) {
+    return res.status(400).send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+// get Inventory
+inventoryRouter.get("/get", authMiddleware, async (req, res) => {
+  try {
+    // below we are getting data for Inventory by using ID stored in inventory Model
+    const inventory = await InventoryModel.find({
+      organization: req.body.userID,
+    })
+      .populate("donor")
+      .populate("hospital");
+    console.log(inventory);
+    return res.send({
+      success: true,
+      data: inventory,
     });
   } catch (error) {
     return res.status(400).send({

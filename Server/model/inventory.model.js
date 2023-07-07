@@ -23,7 +23,7 @@ const inventorySchema = new mongoose.Schema(
     // getting ID with reference
     organization: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "organizations",
+      ref: "organization",
       required: true,
     },
     // if inventroryType is 'Donation-Out' , then hospital will be set

@@ -54,25 +54,27 @@ export const ProtectedPage = ({ children }) => {
       <div>
         {/* {header} */}
         <div className=" flex justify-between  bg-blue-700 text-white px-5 py-4">
-          <h1
-            className="text-2xl"
-            onClick={() => {
-              dispatch(SetLoading(true));
-              setTimeout(() => {
-                dispatch(SetLoading(false));
-                navigate("/");
-              }, 600);
-            }}
-          >
-            Sourav Blood Bank
-          </h1>
-          {/*  Middle */}
-          <div className="flex justify-around">
-            <i className="ri-hand-heart-fill"></i>
+          <div>
+            <h1
+              className="text-2xl"
+              onClick={() => {
+                dispatch(SetLoading(true));
+                setTimeout(() => {
+                  dispatch(SetLoading(false));
+                  navigate("/");
+                }, 600);
+              }}
+            >
+              Sourav Blood Bank
+            </h1>
+            {/*  Middle */}
+            {/* <div className="flex justify-around"> */}
+            <i className="ri-hand-heart-fill"></i>&nbsp;
             <span className="text-xs">
               {currentUser.userType.toUpperCase()}
             </span>
           </div>
+          {/* </div> */}
 
           <div className="flex items-center">
             <i className="ri-user-3-line mr-3"></i>
