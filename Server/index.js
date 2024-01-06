@@ -5,6 +5,7 @@ const cors = require("cors");
 const { usersRouter } = require("./routes/user.routes");
 const { inventoryRouter } = require("./routes/inventory.routes");
 const Port = process.env.PORT || 4500;
+const ip = require('ip')
 
 app.use(express.json()); //to access request.body variables
 app.use(cors());
@@ -23,3 +24,6 @@ app.listen(Port, async () => {
   }
   console.log(`Sever is running at ${Port}`);
 });
+
+
+console.log("app is running on ip " + ip.address())

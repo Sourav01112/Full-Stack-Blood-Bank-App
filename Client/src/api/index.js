@@ -10,7 +10,7 @@ export const axiosInstance = async (method, endpoint, payload) => {
         authorization: `Bearer ${localStorage.getItem("login-Token")}`,
       },
     });
-    // console.log("@response.data", response.data);
+    console.log("@response.data", response.data);
     // {data: {…}, status: 200, statusText: 'OK', headers: AxiosHeaders, config: {…}, …}
     return response.data;
   } catch (error) {

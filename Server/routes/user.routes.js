@@ -106,6 +106,7 @@ usersRouter.post("/login", async (req, res) => {
 
 // getCurrentUSer
 usersRouter.get("/get-current-user", authMiddleware, async (req, res) => {
+  console.log("inside---->")
   try {
     // 1. Descrypting JWT Token
     // 2. Getting info from MongoDb and sending to FE
