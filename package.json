@@ -4,6 +4,7 @@
   "description": "<p>1. Using Vite Template for fast performance</p>",
   "main": "index.js",
   "scripts": {
+    "build":"cd Server && npm install && cd ../Client && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon Server/index.js"
   },

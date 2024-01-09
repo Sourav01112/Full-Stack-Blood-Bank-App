@@ -10,11 +10,8 @@ import { SetLoading } from "../redux/loaderSlice";
 export const ProtectedPage = ({ children }) => {
   //we are not sending any _id, backend has to decrypt the JWT token in the header and then it will send the user Info, this will save user to open network and see Data.
   const navigate = useNavigate();
-
-  // const [currentUser, setCurrentUser] = useState(null);
   const dispatch = useDispatch();
   const { currentUser } = useSelector((store) => store.users);
-  // above users is coming from store.js
 
   const getCurrentUser = async () => {
     try {

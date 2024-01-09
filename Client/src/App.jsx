@@ -11,7 +11,7 @@ import { Profile } from "./pages/Profile";
 
 function App() {
   const { isLoading } = useSelector((store) => store.loaders);
-  // console.log(isLoading);
+  console.log(isLoading);
 
   return (
     <div>

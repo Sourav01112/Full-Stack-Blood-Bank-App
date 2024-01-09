@@ -6,6 +6,10 @@ const authMiddleware = (req, res, next) => {
   if (tokenExists) {
     try {
       const decoded = jwt.verify(tokenExists, process.env.JWTSecret);
+
+
+      // console.log("decoded", decoded)
+   
       if (decoded) {
         // encrypted ? what userID
         // attaching userID to request body

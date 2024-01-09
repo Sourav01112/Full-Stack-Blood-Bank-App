@@ -10,8 +10,7 @@ require("dotenv").config();
 usersRouter.post("/register", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-    // user exits already ?
+
     const userExists = await UserModel.findOne({ email });
     // console.log(userExists, '@user');
     if (userExists) {
@@ -21,12 +20,7 @@ usersRouter.post("/register", async (req, res) => {
           "User already exists in the database. Try with fresh credentials",
       });
     }
-    if (!passwordRegex.test(password)) {
-      return res.status(400).send({
-        message:
-          "Password must contain at least 8 characters, including at least 1 number, 1 lowercase letter, and 1 uppercase letter.",
-      });
-    }
+
 
     const salt = await bcrypt.genSalt(10);
     const hashedPass = await bcrypt.hash(password, salt);
@@ -46,10 +40,12 @@ usersRouter.post("/register", async (req, res) => {
 
 // login
 usersRouter.post("/login", async (req, res) => {
+  console.log("inside login", req.body)
   try {
     const { email, password } = req.body;
-    const userExists = await UserModel.findOne({ email });
-    // console.log(userExists, "@user");
+    const userExists = await UserModel.findOne({ email })
+    // .select('password')
+    console.log(userExists, "@user");
 
     // user exits already ?
     if (!userExists) {
@@ -88,15 +84,20 @@ usersRouter.post("/login", async (req, res) => {
         expiresIn: "1d",
       }
     );
+
+    const user = { ...userExists.toObject() };
+    // console.log("user>>", user)
+    delete user.password;
+
     res.status(200).send({
       success: true,
       message: "User logged in successfully",
-      user: userExists,
+      user: user,
       token: accessToken,
     });
     // console.log("@@", user, token);
   } catch (err) {
-    // console.log("err.message", err.message);
+    console.log("err.message", err);
     return res.status(400).send({
       success: false,
       message: err.message,
@@ -106,19 +107,18 @@ usersRouter.post("/login", async (req, res) => {
 
 // getCurrentUSer
 usersRouter.get("/get-current-user", authMiddleware, async (req, res) => {
-  console.log("inside---->")
-  try {
-    // 1. Descrypting JWT Token
-    // 2. Getting info from MongoDb and sending to FE
-    const isUser = await UserModel.findOne({ _id: req.body.userID });
+  console.log("inside---->, req.body", req.body)
 
-    // Remove password from isUser object
-    // isUser.password = undefined;
+  try {
+    const isUser = await UserModel.findOne({ _id: req.body.userID });
+    const user = { ...isUser.toObject() };
+    // console.log("user>>", user)
+    delete user.password;
     if (isUser) {
       res.status(200).json({
         success: true,
         message: "User fetched successfully",
-        data: isUser,
+        data: user,
       });
     } else {
       res.status(404).json({
