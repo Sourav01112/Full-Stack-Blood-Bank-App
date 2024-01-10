@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const inventorySchema = new mongoose.Schema(
   {
@@ -10,7 +11,7 @@ const inventorySchema = new mongoose.Schema(
     bloodGroup: {
       type: String,
       required: true,
-      //   enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+       
     },
     quantity: {
       type: Number,
@@ -50,6 +51,7 @@ const inventorySchema = new mongoose.Schema(
   }
 );
 
+inventorySchema.plugin(mongoosePaginate);
 const InventoryModel = mongoose.model("inventories", inventorySchema);
 
 module.exports = InventoryModel;

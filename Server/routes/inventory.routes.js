@@ -6,8 +6,10 @@ const InventoryModel = require("../model/inventory.model");
 
 // Add Inventory
 
-inventoryRouter.post("/add", authMiddleware, async (req, res) => {
+inventoryRouter.post("/addInventory", authMiddleware, async (req, res) => {
   const { email } = req.body;
+console.log("req/body", req.body)
+
   try {
     // based on email and inventoryType : Validation
     // fetch user
@@ -54,20 +56,37 @@ inventoryRouter.post("/add", authMiddleware, async (req, res) => {
 });
 
 // get Inventory
-inventoryRouter.get("/get", authMiddleware, async (req, res) => {
+inventoryRouter.post("/getInventory", authMiddleware, async (req, res) => {
+console.log("inside get inventor ###>", req.body)
+  const options = {
+    page: req.body.page,
+    limit: req.body.limit,
+    collation: {
+      locale: 'en',
+    },
+    populate: ["donor", "hospital"],
+    sort: {createdAt: -1}
+  };
+
+  console.log("search", req.body.search)
   try {
-    // below we are getting data for Inventory by using ID stored in inventory Model
-    const inventory = await InventoryModel.find({
-      organization: req.body.userID,
+
+  
+    InventoryModel.paginate(req.body.search, options, function(err,doc){
+      if(doc.docs !== null){
+        console.log("doc", doc)
+        return res.send({
+          success: true,
+          data: doc,
+          message : 'Fetched'
+        });
+      }else{
+        console.log("inside else")
+
+      }
     })
-      .populate("donor")
-      .populate("hospital");
-    console.log(inventory);
-    return res.send({
-      success: true,
-      data: inventory,
-    });
-  } catch (error) {
+  }
+  catch (error) {
     return res.status(400).send({
       success: false,
       message: error.message,
@@ -76,3 +95,19 @@ inventoryRouter.get("/get", authMiddleware, async (req, res) => {
 });
 
 module.exports = { inventoryRouter };
+
+
+
+/*     const inventory = await InventoryModel.find({
+      organization: req.body.userID,
+    })
+      .populate("donor")
+      .populate("hospital")
+      // .populate('organization')
+    console.log(inventory); 
+
+    return res.send({
+            success: true,
+            data: inventory,
+            message : 'Fetched'
+          }); */

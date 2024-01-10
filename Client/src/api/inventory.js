@@ -1,8 +1,11 @@
 import { axiosInstance } from ".";
 
-export const AddInventory = (data) => {
-  return axiosInstance("post", "http://localhost:4500/inventory/add", data);
+import { addInventory, getInventory } from "./constant";
+
+export const AddInventory = (payload) => {
+  return axiosInstance("post", addInventory, payload);
 };
-export const GetInventory = () => {
-  return axiosInstance("get", "http://localhost:4500/inventory/get");
+export const GetInventory = (payload) => {
+  console.log("data^^", payload)
+  return axiosInstance("post", getInventory, payload);
 };

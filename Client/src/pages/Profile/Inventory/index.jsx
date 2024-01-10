@@ -42,20 +42,33 @@ export const Inventory = () => {
     {
       title: "Date",
       dataIndex: "createdAt",
-      render: (text) => getDateFormat(text)
-    }
+      render: (text) => getDateFormat(text),
+    },
   ];
 
   const getData = async () => {
     try {
       dispatch(SetLoading(true));
-      const response = await GetInventory();
+
+      const json = {
+        page: 1,
+        limit: 10,
+        search: {
+          // add whatever search you want to perform
+        },
+      };
+
+      const response = await GetInventory(json);
+      console.log("response getinventory", response)
       dispatch(SetLoading(false));
-      if (response.success) {
-        // console.log("response", response);
+      if (response?.data?.docs?.length > 0 && response?.success) {
+        console.log("response", response);
         setData(response.data);
+      } else if (response?.data?.docs?.length == 0) {
+        console.log("empty");
+        throw new Error("Inventory Empty");
       } else {
-        throw new Error(response.message);
+        throw new Error("Unknown Error");
       }
     } catch (error) {
       message.error(error.message);
@@ -68,17 +81,17 @@ export const Inventory = () => {
 
   return (
     <div>
-      <div className="flex justify-end">
-        <Button type="default" onClick={() => setOpen(true)}>
-          Add Inventory
-        </Button>
+      <div>
+        <div className="flex justify-end">
+          <Button type="default" onClick={() => setOpen(true)}>
+            Add Inventory
+          </Button>
+        </div>
+
+        <Table columns={columns} dataSource={data} className="mt-3" />
+
+        {open && <InventoryForm open={open} setOpen={setOpen} />}
       </div>
-
-      <Table columns={columns} dataSource={data} 
-      className="mt-3"
-      />
-
-      {open && <InventoryForm open={open} setOpen={setOpen} />}
     </div>
   );
 };

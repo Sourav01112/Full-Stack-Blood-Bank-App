@@ -8,13 +8,14 @@ import { SetLoading } from "../../../redux/loaderSlice";
 
 function InventoryForm({ open, setOpen, reloadData }) {
   const { currentUser } = useSelector((store) => store.users);
-  console.log('@@@@',currentUser);
+  // console.log('@@@@',currentUser);
   const [inventoryType, setInventoryType] = useState("Donation-In");
   const [form] = useForm();
   const dispatch = useDispatch();
 
   const onFinish = async (values) => {
-    // console.log(values);
+    console.log(values);
+
     try {
       dispatch(SetLoading(true));
       const response = await AddInventory({
@@ -55,7 +56,7 @@ function InventoryForm({ open, setOpen, reloadData }) {
             placeholder="Select Type"
             value={inventoryType}
             onChange={(value) => {
-              // console.log(value);
+              console.log(value);
               setInventoryType(value);
             }}
             options={[
@@ -84,36 +85,36 @@ function InventoryForm({ open, setOpen, reloadData }) {
             id=""
             options={[
               {
-                value: "a+",
+                value: "A+",
                 label: "A+",
               },
 
               {
-                value: "a-",
+                value: "A-",
                 label: "A-",
               },
               {
-                value: "b+",
+                value: "B+",
                 label: "B+",
               },
               {
-                value: "b-",
+                value: "B-",
                 label: "B-",
               },
               {
-                value: "ab+",
+                value: "AB+",
                 label: "AB+",
               },
               {
-                value: "ab-",
+                value: "AB-",
                 label: "AB-",
               },
               {
-                value: "o+",
+                value: "O+",
                 label: "O+",
               },
               {
-                value: "o-",
+                value: "O-",
                 label: "O-",
               },
             ]}

@@ -105,9 +105,9 @@ usersRouter.post("/login", async (req, res) => {
   }
 });
 
-// getCurrentUSer
-usersRouter.get("/get-current-user", authMiddleware, async (req, res) => {
-  console.log("inside---->, req.body", req.body)
+// 
+usersRouter.get("/get-current-user",authMiddleware, async (req, res) => {
+  console.log("inside---->, /get-current-user", req.body)
 
   try {
     const isUser = await UserModel.findOne({ _id: req.body.userID });

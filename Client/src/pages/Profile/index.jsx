@@ -19,10 +19,10 @@ export const Profile = () => {
             <Inventory />
           </TabPane>
           <TabPane tab="Donors" key="2">
-            Content of Sourav tab
+            Content of Donors tab
           </TabPane>
           <TabPane tab="Hospitals" key="3">
-            Content of Rakesh tab
+            Content of Hispital tab
           </TabPane>
         </Tabs>
       )}

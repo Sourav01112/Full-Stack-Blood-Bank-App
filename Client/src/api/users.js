@@ -1,10 +1,6 @@
 import { axiosInstance } from ".";
+import { register,login, getcurrentuser,  } from "./constant";
 
-const baseURL = 'http://192.168.0.105:4500/users/'
-
-const register = baseURL + 'register'
-const login = baseURL + 'login'
-const getcurrentuser = baseURL + 'get-current-user'
 
 
 export const RegisteredUser = async (payload) => {

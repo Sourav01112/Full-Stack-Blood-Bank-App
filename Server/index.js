@@ -38,5 +38,4 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(process.cwd(), viteBuildDirectory, "index.html"));
 });
 
-
 console.log("app is running on ip " + ip.address())

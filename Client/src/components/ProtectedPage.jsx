@@ -23,7 +23,7 @@ export const ProtectedPage = ({ children }) => {
       dispatch(SetLoading(false));
 
       if (response.success) {
-        message.success(response.message);
+        // message.success(response.message);
         // setCurrentUser(response.data);
         dispatch(SetCurrentUser(response.data)); //from Redux Toolkit
       } else {
@@ -74,11 +74,16 @@ export const ProtectedPage = ({ children }) => {
           {/* </div> */}
 
           <div className="flex items-center">
-            <i className="ri-user-3-line mr-3"></i>
+            <i
+              className="ri-user-3-line mr-3"
+              title="Profile"
+            ></i>
             <div className="flex flex-col">
               <span
                 className="mr-5 text-xl cursor-pointer"
                 onClick={() => navigate("/profile")}
+                title="Profile"
+
               >
                 {getLoggedInUserName(currentUser).toUpperCase()}
               </span>
@@ -103,7 +108,7 @@ export const ProtectedPage = ({ children }) => {
         {/* <h1>Welcome {getLoggedInUserName(currentUser)}</h1> */}
 
         {/* BODY */}
-        <div className="p-5">{children}</div>
+        <div className="px-5 py-2">{children}</div>
       </div>
     )
   );
