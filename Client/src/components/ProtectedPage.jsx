@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GetCurrentUser } from "../api/users";
-import { message } from "antd";
+import { message, Tooltip } from "antd";
 import { useNavigate } from "react-router-dom";
 import { getLoggedInUserName } from "../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
@@ -62,7 +62,7 @@ export const ProtectedPage = ({ children }) => {
                 }, 600);
               }}
             >
-              Sourav Blood Bank
+              Blood Donation Portal
             </h1>
             {/*  Middle */}
             {/* <div className="flex justify-around"> */}
@@ -73,22 +73,21 @@ export const ProtectedPage = ({ children }) => {
           </div>
           {/* </div> */}
 
-          <div className="flex items-center">
-            <i
-              className="ri-user-3-line mr-3"
-              title="Profile"
-            ></i>
-            <div className="flex flex-col">
-              <span
-                className="mr-5 text-xl cursor-pointer"
-                onClick={() => navigate("/profile")}
-                title="Profile"
+          <div className="flex items-center flex-row">
+            <Tooltip title="Profile">
+              <div className="flex items-center">
+                <i className="ri-user-3-line mr-3"></i>
+                <span
+                  className="mr-5 text-xl cursor-pointer"
+                  onClick={() => navigate("/profile")}
+                >
+                  {getLoggedInUserName(currentUser).toUpperCase()}
+                </span>
+              </div>
+            </Tooltip>
 
-              >
-                {getLoggedInUserName(currentUser).toUpperCase()}
-              </span>
-            </div>
             {/* LOGOUT */}
+            <Tooltip title="Log Out">
             <i
               className="ri-logout-box-r-line ml-5 cursor-pointer"
               onClick={() => {
@@ -101,6 +100,8 @@ export const ProtectedPage = ({ children }) => {
                 }, 1000);
               }}
             ></i>
+            </Tooltip>
+
           </div>
         </div>
 

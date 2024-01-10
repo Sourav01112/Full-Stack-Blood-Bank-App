@@ -1,5 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap"); */
+/* @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap"); */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -14,7 +15,8 @@ button {
 
 * {
   /* font-family: "Lato", sans-serif !important; */
-  font-family: "Roboto Mono", monospace;
+  /* font-family: "Roboto Mono", monospace; */
+  font-family: 'Roboto', sans-serif;
   padding: 0;
   margin: 0;
 }
@@ -40,7 +42,7 @@ i {
   font-size: 18px;
 }
 
-/*  table */
-/* table {
-  border: 1px solid rgb(245, 245, 245) !important;
-} */
+
+ table {
+  border: 10px solid rgb(245, 245, 245) !important;
+}

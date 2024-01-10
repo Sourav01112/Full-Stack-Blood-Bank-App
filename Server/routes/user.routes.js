@@ -48,10 +48,12 @@ usersRouter.post("/login", async (req, res) => {
     console.log(userExists, "@user");
 
     // user exits already ?
-    if (!userExists) {
+    if (!userExists || userExists == null) {
+      console.log("here-->")
+
       return res
         .status(401)
-        .send({ success: false, message: "invalid username or password" });
+        .send({ success: false, message: "Invalid username or password" });
     }
     // userType is matching
     if (userExists.userType !== req.body.userType) {
@@ -105,7 +107,7 @@ usersRouter.post("/login", async (req, res) => {
   }
 });
 
-// 
+// Get Current User According to UserType
 usersRouter.get("/get-current-user",authMiddleware, async (req, res) => {
   console.log("inside---->, /get-current-user", req.body)
 
@@ -134,6 +136,40 @@ usersRouter.get("/get-current-user",authMiddleware, async (req, res) => {
   }
 });
 
-// export
 
+usersRouter.post('/get-all-donors', authMiddleware, async(req,res)=>{
+  try {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+})
+
+
+
+
+
+// export
 module.exports = { usersRouter };

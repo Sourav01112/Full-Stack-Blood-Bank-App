@@ -3,12 +3,13 @@ const inventoryRouter = express.Router();
 const UserModel = require("../model/user.model");
 const { authMiddleware } = require("../middleware/auth.middleware");
 const InventoryModel = require("../model/inventory.model");
+const mongoose = require("mongoose");
 
 // Add Inventory
 
 inventoryRouter.post("/addInventory", authMiddleware, async (req, res) => {
   const { email } = req.body;
-console.log("req/body", req.body)
+  console.log("req/body", req.body)
 
   try {
     // based on email and inventoryType : Validation
@@ -30,12 +31,71 @@ console.log("req/body", req.body)
     //  saving ID as per Inventory Type
 
     if (req.body.inventoryType === "Donation-Out") {
+      console.log("inside Out")
       // validation for Out : If we have A+ : 100ML and we are sending 120ML out, it should throw error
       const requestedBloodGroup = req.body.bloodGroup;
       const requestedQuantity = req.body.quantity;
-      const oraganization = req.body.userID;
+      const organization = new mongoose.Types.ObjectId(req.body.userID);
 
       req.body.hospital = user._id;
+
+      // below will return total amount of blood Group based on request (A+,A-,B+,B-) the organization has received till date 
+      const totalINAmountOfRequestedBloodGroup = await InventoryModel.aggregate([
+        {
+          $match: {
+            organization,
+            inventoryType: 'Donation-In',
+            bloodGroup: req.body.bloodGroup
+          },
+        },
+        {
+          $group: {
+            _id: "$bloodGroup",
+            total: {
+              $sum: "$quantity"
+            }
+          }
+        }
+      ])
+
+      console.log({ totalINAmountOfRequestedBloodGroup })
+
+      const totalIn = totalINAmountOfRequestedBloodGroup[0].total || 0
+
+
+      const totalOutAmountOfRequestedBloodGroup = await InventoryModel.aggregate([
+        {
+          $match: {
+            organization,
+            inventoryType: 'Donation-Out',
+            bloodGroup: req.body.bloodGroup
+          },
+        },
+        {
+          $group: {
+            _id: "$bloodGroup",
+            total: {
+              $sum: "$quantity"
+            }
+          }
+        }
+      ])
+
+      console.log({ totalOutAmountOfRequestedBloodGroup })
+
+      const totalOut = totalOutAmountOfRequestedBloodGroup[0]?.total || 0
+
+      const availableQtyOfRequestedGroup = totalIn - totalOut
+
+      console.log({ availableQtyOfRequestedGroup })
+
+
+      if (availableQtyOfRequestedGroup < requestedQuantity) {
+        throw new Error(`Only ${availableQtyOfRequestedGroup} ML units of ${requestedBloodGroup} are currently availabe.`)
+      }
+
+
+
     } else {
       req.body.donor = user._id;
     }
@@ -57,30 +117,38 @@ console.log("req/body", req.body)
 
 // get Inventory
 inventoryRouter.post("/getInventory", authMiddleware, async (req, res) => {
-console.log("inside get inventor ###>", req.body)
+  console.log("inside get inventor ###>", req.body)
+
+  var idfromAuthMiddleware = req.body.userID
+
   const options = {
     page: req.body.page,
     limit: req.body.limit,
     collation: {
       locale: 'en',
+      strength: 2,
     },
     populate: ["donor", "hospital"],
-    sort: {createdAt: -1}
+    sort: { createdAt: -1 }
   };
 
   console.log("search", req.body.search)
   try {
 
-  
-    InventoryModel.paginate(req.body.search, options, function(err,doc){
-      if(doc.docs !== null){
+    const combinedQuery = {
+      ...req.body.search,
+      organization: idfromAuthMiddleware,
+    };
+
+    InventoryModel.paginate(combinedQuery, options, function (err, doc) {
+      if (doc.docs !== null) {
         console.log("doc", doc)
         return res.send({
           success: true,
           data: doc,
-          message : 'Fetched'
+          message: 'Fetched'
         });
-      }else{
+      } else {
         console.log("inside else")
 
       }

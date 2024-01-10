@@ -43,7 +43,6 @@ export const Login = () => {
         ...values,
         userType: type,
       });
-      // console.log("This is response", response);
       dispatch(SetLoading(false));
       if (response.success) {
         message.success(response.message);
@@ -53,19 +52,19 @@ export const Login = () => {
       } else if (!type) {
         message.error("Please type correct password");
         form.resetFields();
+      } else if (!response.success) {
+        message.error(response.response.statusText);
+        form.resetFields();
       } else {
         message.error(response.message);
         form.resetFields();
-
-        // console.log("yes");
-        // message.warning(response.message);
+        message.warning(response.message);
       }
     } catch (error) {
       dispatch(SetLoading(false));
       message.error(error.message);
       form.resetFields();
     } finally {
-      //  loading state : false
       dispatch(SetLoading(false));
     }
   };

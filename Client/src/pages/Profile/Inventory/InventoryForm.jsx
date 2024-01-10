@@ -23,12 +23,14 @@ function InventoryForm({ open, setOpen, reloadData }) {
         inventoryType,
         organization: currentUser._id,
       });
+      console.log("inventory Reponse", response)
       dispatch(SetLoading(false));
       if (response.success) {
         message.success("Inventory Added Successfully!");
+        reloadData()
         setOpen(false);
       } else {
-        throw new Error(response.message);
+        throw new Error(response?.response?.data?.message);
       }
     } catch (error) {
       message.error(error.message);
