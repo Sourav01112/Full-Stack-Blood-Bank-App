@@ -53,12 +53,13 @@ usersRouter.post("/login", async (req, res) => {
 
       return res
         .status(401)
-        .send({ success: false, message: "Invalid username or password" });
+        .send({ status :401, success: false, message: "Invalid username or password" });
     }
     // userType is matching
     if (userExists.userType !== req.body.userType) {
       return res.send({
         success: false,
+        status: 203,
         message: `User is not registered as ${req.body.userType}`,
       });
     }
@@ -70,7 +71,7 @@ usersRouter.post("/login", async (req, res) => {
       return (
         res
           // .status(401)
-          .send({ success: false, message: "Inavlid Password" })
+          .send({ status: 404, success: false, message: "Wrong Password Entered" })
       );
     }
 

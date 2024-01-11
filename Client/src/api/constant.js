@@ -1,6 +1,13 @@
 
-export const urlBaseUsers = 'http://192.168.0.105:4500/users/'
-export const urlBaseInventory = 'http://192.168.0.105:4500/inventory/'
+// Production
+export const urlBaseUsers = 'https://rich-ruby-sturgeon-garb.cyclic.app/api/users/'
+export const urlBaseInventory = 'https://rich-ruby-sturgeon-garb.cyclic.app/api/inventory/'
+
+
+/*  Local */
+
+// export const urlBaseUsers = 'http://192.168.56.1:4500/api/users/'
+// export const urlBaseInventory = 'http://192.168.56.1:4500/api/inventory/'
 
 
 // Users

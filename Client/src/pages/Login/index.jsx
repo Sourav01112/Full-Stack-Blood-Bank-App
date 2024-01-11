@@ -44,23 +44,40 @@ export const Login = () => {
         userType: type,
       });
       dispatch(SetLoading(false));
+
+      // console.log("response inside login", response)
       if (response.success) {
+        // console.log("1")
+
         message.success(response.message);
         localStorage.setItem("login-Token", response.token);
         form.resetFields();
         navigate("/");
       } else if (!type) {
+        // console.log("2")
+
         message.error("Please type correct password");
         form.resetFields();
       } else if (!response.success) {
-        message.error(response.response.statusText);
+        // console.log("3")
+
+        if (response.status == 404) {
+          message.error(response?.message);
+        } else if (response.status == 203) {
+          message.error(response?.message);
+        }
+        // message.error(response?.response?.data?.message);
         form.resetFields();
       } else {
+        // console.log("4")
+
         message.error(response.message);
         form.resetFields();
         message.warning(response.message);
       }
     } catch (error) {
+      // console.log("5")
+
       dispatch(SetLoading(false));
       message.error(error.message);
       form.resetFields();
