@@ -19,18 +19,18 @@ inventoryRouter.post("/addInventory", authMiddleware, async (req, res) => {
     // console.log("@@@@@@@@@@", user.userType);
     // checks
     if (!user) throw new Error("Invalid Email");
-    if (req.body.inventoryType === "Donation-In" && user.userType !== "donor") {
+    if (req.body.inventoryType === "Incoming" && user.userType !== "donor") {
       throw new Error("The email is not recognized as Donor");
     }
     if (
-      req.body.inventoryType === "Donation-Out" &&
+      req.body.inventoryType === "Outgoing" &&
       user.userType !== "hospital"
     ) {
       throw new Error("The email is not recognized as hospital");
     }
     //  saving ID as per Inventory Type
 
-    if (req.body.inventoryType === "Donation-Out") {
+    if (req.body.inventoryType === "Outgoing") {
       console.log("inside Out")
       // validation for Out : If we have A+ : 100ML and we are sending 120ML out, it should throw error
       const requestedBloodGroup = req.body.bloodGroup;
@@ -44,7 +44,7 @@ inventoryRouter.post("/addInventory", authMiddleware, async (req, res) => {
         {
           $match: {
             organization,
-            inventoryType: 'Donation-In',
+            inventoryType: 'Incoming',
             bloodGroup: req.body.bloodGroup
           },
         },
@@ -67,7 +67,7 @@ inventoryRouter.post("/addInventory", authMiddleware, async (req, res) => {
         {
           $match: {
             organization,
-            inventoryType: 'Donation-Out',
+            inventoryType: 'Outgoing',
             bloodGroup: req.body.bloodGroup
           },
         },

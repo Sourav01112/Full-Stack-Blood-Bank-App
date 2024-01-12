@@ -68,8 +68,8 @@ function InventoryForm({ open, setOpen, reloadData }) {
               },
 
               {
-                value: "Donation-Out",
-                label: "Donation-Out",
+                value: "Outgoing",
+                label: "Outgoing",
               },
             ]}
           ></Select>
@@ -127,7 +127,7 @@ function InventoryForm({ open, setOpen, reloadData }) {
           rules={getAndDesignValidation()}
           name="email"
           label={
-            inventoryType === "Donation-Out" ? "Hospital Email" : "Donor Email"
+            inventoryType === "Outgoing" ? "Hospital Email" : "Donor Email"
           }
         >
           <Input type="email" />

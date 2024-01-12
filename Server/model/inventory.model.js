@@ -6,7 +6,7 @@ const inventorySchema = new mongoose.Schema(
     inventoryType: {
       type: String,
       required: true,
-      enum: ["Donation-In", "Donation-Out"],
+      enum: ["Incoming", "Outgoing"],
     },
     bloodGroup: {
       type: String,
@@ -27,21 +27,21 @@ const inventorySchema = new mongoose.Schema(
       ref: "organization",
       required: true,
     },
-    // if inventroryType is 'Donation-Out' , then hospital will be set
-    // if inventroryType is 'Donation-In' , then Donor will be set
+    // if inventroryType is 'Outgoing' , then hospital will be set
+    // if inventroryType is 'Incoming' , then Donor will be set
 
     hospital: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
       required: function () {
-        return this.inventoryType === "Donation-Out";
+        return this.inventoryType === "Outgoing";
       },
     },
     donor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
       required: function () {
-        return this.inventoryType === "Donation-In";
+        return this.inventoryType === "Incoming";
       },
     },
   },

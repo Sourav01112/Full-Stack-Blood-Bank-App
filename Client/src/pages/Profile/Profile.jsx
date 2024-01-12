@@ -74,7 +74,7 @@ export const Profile = () => {
           >
             <TabPane tab="Consumptions" key="1">
               <InventoryComponent
-                filters={{ inventoryType: "Donation-Out" }}
+                filters={{ inventoryType: "Outgoing" }}
                 userType="hospital"
               />
             </TabPane>
