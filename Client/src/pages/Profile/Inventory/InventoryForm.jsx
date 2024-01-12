@@ -8,8 +8,8 @@ import { SetLoading } from "../../../redux/loaderSlice";
 
 function InventoryForm({ open, setOpen, reloadData }) {
   const { currentUser } = useSelector((store) => store.users);
-  // console.log('@@@@',currentUser);
-  const [inventoryType, setInventoryType] = useState("Donation-In");
+  console.log('@@@@',currentUser);
+  const [inventoryType, setInventoryType] = useState("Incoming");
   const [form] = useForm();
   const dispatch = useDispatch();
 
@@ -63,8 +63,8 @@ function InventoryForm({ open, setOpen, reloadData }) {
             }}
             options={[
               {
-                value: "Donation-In",
-                label: "Donation-In",
+                value: "Incoming",
+                label: "Incoming",
               },
 
               {

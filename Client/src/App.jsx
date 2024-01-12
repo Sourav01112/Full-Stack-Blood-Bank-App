@@ -7,7 +7,7 @@ import { Register } from "./pages/Register";
 import { ProtectedPage } from "./components/ProtectedPage";
 import { useSelector } from "react-redux";
 import { LoadingSpinner } from "./components/LoadingSpinner";
-import { Profile } from "./pages/Profile";
+import { Profile } from "./pages/Profile/Profile";
 
 function App() {
   const { isLoading } = useSelector((store) => store.loaders);

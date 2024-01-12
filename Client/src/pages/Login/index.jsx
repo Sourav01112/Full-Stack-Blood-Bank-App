@@ -171,8 +171,8 @@ export const Login = () => {
           </Button>
 
           <Link to="/register" className=" text-center text-gray-500">
-            Already have an account?{" "}
-            <strong className="text-red-500">Register</strong>
+          Not yet registered?{" "}
+            <strong className="text-red-500">Sign up now</strong>
           </Link>
           <Link to="/forgotPassword" className="text-center text-black">
             Forgot Password ? <strong>Click Here</strong>

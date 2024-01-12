@@ -1,6 +1,6 @@
 
 import { axiosInstance } from ".";
-import { register, login, getcurrentuser, getAllDonorsOfOrg, getAllHospOfOrg, } from "./constant";
+import { register, login, getcurrentuser, getAllDonorsOfOrg, getAllHospOfOrg, getAllOrgForDonor, getAllOrgForHospital, } from "./constant";
 
 
 export const RegisteredUser = async (payload) => {
@@ -39,10 +39,33 @@ export const GetAllDonorsOfOrganization = async (payload) => {
   return response;
 };
 
+
 export const GetAllHospitalsOfOrganization = async (payload) => {
   const response = await axiosInstance(
     "post",
     getAllHospOfOrg,
+    payload
+  );
+  return response;
+};
+
+  // This retrieves a list of all the organizations to which an individual like me has contributed blood donations.
+export const GetAllOrganizationsForDonor = async (payload) => {
+
+
+  const response = await axiosInstance(
+    "post",
+    getAllOrgForDonor,
+    payload
+  );
+  return response;
+};
+
+// This retrieves a list of all the organizations to which an Hospital has asked blood donations.
+export const GetAllOrganizationsForHospital = async (payload) => {
+  const response = await axiosInstance(
+    "post",
+    getAllOrgForHospital,
     payload
   );
   return response;

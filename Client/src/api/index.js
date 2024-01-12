@@ -3,7 +3,7 @@ import axios from "axios";
 export const axiosInstance = async (method, endpoint, payload) => {
 
 
-  // console.log("@response", method, endpoint, payload);
+  console.log("@response", method, endpoint, payload);
 
   try {
     const response = await axios({

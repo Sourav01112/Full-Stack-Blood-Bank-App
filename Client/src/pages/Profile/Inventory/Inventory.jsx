@@ -10,6 +10,7 @@ export const Inventory = () => {
   const [data, setData] = useState([]);
   const [inputTyped, setInputTyped] = useState();
   const [searchError, setSearchError] = useState("");
+  const [searchPerformed, setSearchPerformed] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -17,13 +18,11 @@ export const Inventory = () => {
   const columns = [
     {
       title: "S.No",
-      // dataIndex: "serialNumber",
       render: (text, record, index) => index + 1,
     },
     {
       title: "Inventory Type",
       dataIndex: "inventoryType",
-      render: (text) => text.toUpperCase(),
     },
     {
       title: "Blood Group",
@@ -33,13 +32,13 @@ export const Inventory = () => {
     {
       title: "Quantity",
       dataIndex: "quantity",
-      render: (text) => text + " ML",
+      render: (text) => text + " ml",
     },
     {
-      title: "Reference",
-      dataIndex: "reference",
+      title: "Ref",
+      dataIndex: "Ref",
       render: (text, record) => {
-        if (record.inventoryType === "Donation-In") {
+        if (record.inventoryType === "Incoming") {
           return record.donor.name;
         } else {
           return record.hospital.hospitalName;
@@ -72,17 +71,14 @@ export const Inventory = () => {
       }
 
       const response = await GetInventory(json);
-      // console.log("response getinventory", response);
+      console.log("response getinventory", response);
       dispatch(SetLoading(false));
       if (response?.data?.docs?.length > 0 && response?.success) {
-        // console.log("response in here", response);
+        console.log("response in here", response);
         setData(response?.data?.docs);
       } else if (response?.data?.docs?.length == 0) {
-        // console.log("empty");
         setSearchError("No matching data found.");
         setData([]);
-        // console.log("empty");
-        // throw new Error("Inventory Empty");
       } else {
         throw new Error("Unknown Error");
       }
@@ -91,23 +87,24 @@ export const Inventory = () => {
       dispatch(SetLoading(false));
     }
   };
+
   useEffect(() => {
     getData();
   }, []);
 
   const handleSearchChange = (event) => {
-    // console.log(event.target.value);
-
     setInputTyped(event.target.value);
-
     setSearchError("");
   };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
+      setSearchPerformed(true);
       getData();
     }
   };
+
+ 
 
   return (
     <div>
@@ -116,7 +113,7 @@ export const Inventory = () => {
           <Input
             value={inputTyped}
             onChange={handleSearchChange}
-            onKeyDown={handleKeyPress} // Handle "Enter" key press
+            onKeyDown={handleKeyPress}
             placeholder="Search any data"
             style={{ width: "200px" }}
           />
@@ -126,9 +123,17 @@ export const Inventory = () => {
           </Button>
         </div>
 
-        {searchError && (
-          <p style={{ color: "red", marginTop: "5px" }}>{searchError}</p>
-        )}
+        {searchPerformed == true
+          ? searchError && (
+              <p style={{ color: "red", marginTop: "5px" }}>{searchError}</p>
+            )
+          : null}
+
+          <div className="mt-4 text-blue-900">
+            {`This list compiles comprehensive information about the utilization of blood donations, encompassing details such as blood group types and quantities. It covers transactions involving blood exchanges among diverse entities, including Blood Bank Organizations, Hospitals, and Individual Donors`}
+          </div>
+        
+    
 
         <Table columns={columns} dataSource={data} className="mt-7" />
 

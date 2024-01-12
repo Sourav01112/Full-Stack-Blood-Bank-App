@@ -21,12 +21,19 @@ export const ProtectedPage = ({ children }) => {
       await new Promise((resolve) => setTimeout(resolve, 500));
       const response = await GetCurrentUser();
       dispatch(SetLoading(false));
-
+// console.log("response", response)
       if (response.success) {
         // message.success(response.message);
         // setCurrentUser(response.data);
         dispatch(SetCurrentUser(response.data)); //from Redux Toolkit
-      } else {
+      } else if(!response.success){
+        localStorage.removeItem('login-Token');
+        message.error(response.message);
+        navigate('/login')
+      }
+      
+      
+      else {
         message.error(response.message);
       }
     } catch (error) {
