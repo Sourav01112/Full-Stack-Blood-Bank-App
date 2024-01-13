@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { GetAllHospitalsOfOrganization } from "../../../api/users";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Table, message, Input } from "antd";
+import { Button, Table, message, Input, Skeleton } from "antd";
 import { SetLoading } from "../../../redux/loaderSlice";
 import { getDateFormat } from "../../../utils/helpers";
 
 export const Hospital = () => {
-
   const [data, setData] = useState([]);
   const [inputTyped, setInputTyped] = useState();
   const [searchError, setSearchError] = useState("");
   const [searchPerformed, setSearchPerformed] = useState(false);
   const { currentUser } = useSelector((state) => state.users);
-  console.log("currentUser--->",currentUser);
-  const orgName = currentUser.organizationName
+  const [loading, setLoading] = React.useState(true);
+
+  console.log("currentUser--->", currentUser);
+  const orgName = currentUser.organizationName;
 
   const dispatch = useDispatch();
 
@@ -25,13 +26,11 @@ export const Hospital = () => {
     {
       title: "Hospital Name",
       dataIndex: "hospitalName",
-      // render: (text) => text.toUpperCase(),
     },
 
     {
       title: "Owner",
       dataIndex: "owner",
-      //   render: (text) => text.toUpperCase(),
     },
 
     {
@@ -52,8 +51,6 @@ export const Hospital = () => {
 
   const getData = async () => {
     try {
-      dispatch(SetLoading(true));
-
       const json = {
         page: 1,
         limit: 10,
@@ -63,18 +60,21 @@ export const Hospital = () => {
       if (inputTyped) {
         json.search.bloodGroup = inputTyped;
       }
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       const response = await GetAllHospitalsOfOrganization(json);
-      console.log("@@##$@#@$$%@", response);
-      dispatch(SetLoading(false));
 
       if (response?.data?.aggregationResult?.length > 0 && response?.success) {
+        setLoading(false);
+
         const donorDeatilsInsideResponse =
           response?.data?.aggregationResult?.map((item) => item._id);
         message.success(response.message);
         setData(donorDeatilsInsideResponse);
       } else if (response?.data?.aggregationResult?.length == 0) {
         // console.log("empty");
+        setLoading(false);
+
         setSearchError("No matching data found.");
         setData([]);
       } else {
@@ -82,6 +82,8 @@ export const Hospital = () => {
       }
     } catch (error) {
       message.error(error.message);
+      setLoading(false);
+
       dispatch(SetLoading(false));
     }
   };
@@ -90,10 +92,7 @@ export const Hospital = () => {
   }, []);
 
   const handleSearchChange = (event) => {
-    // console.log(event.target.value);
-
     setInputTyped(event.target.value);
-
     setSearchError("");
   };
 
@@ -128,11 +127,13 @@ export const Hospital = () => {
           {`This list provides an overview of the data, highlighting key information about registered hospitals and their respective details under ${orgName} organization.`}
         </div>
 
-        <Table columns={columns} dataSource={data} className="mt-7" />
-
-        {/* {open && (
-          <InventoryForm open={open} setOpen={setOpen} reloadData={getData} />
-        )} */}
+        {loading ? (
+          <div className="mt-5">
+            <Skeleton active title={true} paragraph={{ rows: 10 }} />
+          </div>
+        ) : (
+          <Table columns={columns} dataSource={data} className="mt-7" />
+        )}
       </div>
     </div>
   );

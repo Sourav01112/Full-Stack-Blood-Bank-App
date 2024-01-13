@@ -11,7 +11,7 @@ export const GetInventory = (payload) => {
 
 // Using this in InventoryTable component
 export const GetInventoryWithFilters = (payload) => {
-  console.log("payload", payload);
+  // console.log("payload", payload);
   return axiosInstance("post", getInventoryWithFilters,
     payload)
 };

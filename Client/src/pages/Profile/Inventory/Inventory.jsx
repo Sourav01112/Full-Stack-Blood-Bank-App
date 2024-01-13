@@ -35,8 +35,8 @@ export const Inventory = () => {
       render: (text) => text + " ml",
     },
     {
-      title: "Ref",
-      dataIndex: "Ref",
+      title: "Reference",
+      dataIndex: "Reference",
       render: (text, record) => {
         if (record.inventoryType === "Incoming") {
           return record.donor.name;
@@ -62,7 +62,7 @@ export const Inventory = () => {
 
       const json = {
         page: 1,
-        limit: 10,
+        limit: 50,
         search: {},
       };
 

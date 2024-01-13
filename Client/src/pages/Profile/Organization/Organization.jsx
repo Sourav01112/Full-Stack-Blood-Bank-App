@@ -5,24 +5,29 @@ import {
   GetAllOrganizationsForHospital,
 } from "../../../api/users";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Table, message, Input } from "antd";
+import { Button, Table, message, Input, Modal } from "antd";
 import { SetLoading } from "../../../redux/loaderSlice";
 import { getDateFormat } from "../../../utils/helpers";
 import { LinkOutlined } from "@ant-design/icons";
+import { InventoryComponent } from "../../../components/InventoryComponent";
 
 export const Organization = ({ userType }) => {
   // console.log("userType@@", userType);
 
   const { currentUser } = useSelector((state) => state.users);
+  console.log("currentUser", currentUser);
 
   // console.log("currentUser---->", currentUser);
   const hospitalName = currentUser.hospitalName;
   const donorName = currentUser.name;
-
+  const [selectedOrganization, setSelectedOrganization] = useState(null);
   const [data, setData] = useState([]);
   const [inputTyped, setInputTyped] = useState();
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [searchError, setSearchError] = useState("");
+  const [showHistoryModal, setshowHistoryModal] = useState(false);
+
+  console.log("selectedOrganization---", selectedOrganization);
 
   const dispatch = useDispatch();
 
@@ -69,6 +74,23 @@ export const Organization = ({ userType }) => {
       title: " Registered",
       dataIndex: "createdAt",
       render: (text) => getDateFormat(text),
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      render: (text, record) => {
+        return (
+          <span
+            className="underline text-md cursor-pointer"
+            onClick={() => {
+              setSelectedOrganization(record);
+              setshowHistoryModal(true);
+            }}
+          >
+            History
+          </span>
+        );
+      },
     },
   ];
 
@@ -162,9 +184,35 @@ export const Organization = ({ userType }) => {
         )}
 
         <Table columns={columns} dataSource={data} className="mt-7" />
+
         {/* {open && (
           <InventoryForm open={open} setOpen={setOpen} reloadData={getData} />
         )} */}
+
+        {showHistoryModal && (
+          <Modal
+            title={
+              `${
+                userType == "donor" ? "Donation History" : "Consumption History"
+              } in ${selectedOrganization?.organizationName} `
+
+              //   userType == `{ req.body.json.searchdonor" ? "Donation History" : "Consumption History" + selectedOrganization?.organizationName
+              // }`
+            }
+            open={showHistoryModal}
+            onCancel={() => setshowHistoryModal(false)}
+            onOk={() => setshowHistoryModal(false)}
+            centered
+            width={1000}
+          >
+            <InventoryComponent
+              filters={{
+                organization: selectedOrganization?._id,
+                userType: currentUser?.userType,
+              }}
+            />
+          </Modal>
+        )}
       </div>
     </div>
   );

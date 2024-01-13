@@ -1,0 +1,119 @@
+* {
+  box-sizing: border-box;
+  font-family: "Mulish", sans-serif;
+}
+
+.ConfirmAccountContainer {
+  display: flex;
+  gap: 5%;
+  height: auto;
+  justify-content: center;
+  width: 100%;
+}
+
+.ConfirmAccountContainer > div {
+  display: flex;
+  justify-content: center;
+  width: 40%;
+  margin-top: 160px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  gap: 2%;
+  border-radius: 20px;
+  height: auto;
+}
+
+#mailOpeningDiv {
+  width: 38%;
+  padding: 40px;
+}
+
+.mailOpeningRightDiv {
+  width: 58%;
+  margin-top: 10px;
+  padding-left: 5%;
+}
+
+.mailOpeningHeading {
+  margin-top: 30px;
+  width: 95%;
+  margin-bottom: 20px;
+  text-align: left;
+  
+}
+
+.mailOpeningHeading > h1 {
+  color: #2e343d;
+  margin-bottom: -5px;
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+.mailOpeningHeading > p {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 320px) {
+  .ConfirmAccountContainer {
+    width: 100%;
+  }
+
+  .ConfirmAccountContainer > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 80px;
+    border-radius: 10px;
+    height: auto;
+  }
+
+  .ConfirmAccountContainer > div > div {
+    width: 100%;
+  }
+
+  #mailOpeningDiv {
+    width: 70%;
+    position: relative;
+    left: 11%;
+  }
+
+  .mailOpeningRightDiv {
+    width: 100%;
+    padding-left: 5%;
+    margin-top: -40px;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 580px) {
+  .ConfirmAccountContainer {
+    width: 100%;
+  }
+
+  .ConfirmAccountContainer > div {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    margin-top: 80px;
+    border-radius: 10px;
+    height: auto;
+  }
+
+  .ConfirmAccountContainer > div > div {
+    width: 100%;
+  }
+
+  #mailOpeningDiv {
+    width: 70%;
+    position: relative;
+    left: 13%;
+  }
+
+  .mailOpeningRightDiv {
+    width: 100%;
+    padding-left: 10%;
+    margin-top: -40px;
+  }
+}

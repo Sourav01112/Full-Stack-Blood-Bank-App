@@ -1,33 +1,45 @@
 
 // Production
-export const urlBaseUsers = 'https://rich-ruby-sturgeon-garb.cyclic.app/api/users/'
-export const urlBaseInventory = 'https://rich-ruby-sturgeon-garb.cyclic.app/api/inventory/'
+export const urlBase = 'https://rich-ruby-sturgeon-garb.cyclic.app/api/'
+
 
 
 /*  Local */
 
-// export const urlBaseUsers = 'http://192.168.0.105:4500/api/users/'
-// export const urlBaseInventory = 'http://192.168.0.105:4500/api/inventory/'
+// export const urlBase = 'http://192.168.0.105:4500/api/'
 
 
 // Users
-export const register = urlBaseUsers + 'register'
-export const login = urlBaseUsers + 'login'
-export const getcurrentuser = urlBaseUsers + 'get-current-user'
-export const getAllDonorsOfOrg = urlBaseUsers + 'get-all-donors'
-export const getAllHospOfOrg = urlBaseUsers + 'get-all-hospitals'
+export const register = urlBase + 'users/register'
+export const login = urlBase + 'users/login'
+
+export const forgotPassword = urlBase + 'users/forgotPassword'
+export const resetPassword = urlBase + 'users/resetPassword'
+// export const log3in = urlBase + 'users/login'
+// export const logrin = urlBase + 'users/login'
 
 
 
-export const getAllOrgForDonor = urlBaseUsers + 'get-all-org-for-donor'
-export const getAllOrgForHospital = urlBaseUsers + 'get-all-org-for-hospital'
+
+export const getcurrentuser = urlBase + 'users/get-current-user'
+export const getAllDonorsOfOrg = urlBase + 'users/get-all-donors'
+export const getAllHospOfOrg = urlBase + 'users/get-all-hospitals'
+export const getAllOrgForDonor = urlBase + 'users/get-all-org-for-donor'
+export const getAllOrgForHospital = urlBase + 'users/get-all-org-for-hospital'
 
 
 
 // Inventory
-export const addInventory = urlBaseInventory + 'addInventory'
-export const getInventory = urlBaseInventory + 'getInventory'
-export const getInventoryWithFilters = urlBaseInventory + 'getInventory-filter'
+export const addInventory = urlBase + 'inventory/addInventory'
+export const getInventory = urlBase + 'inventory/getInventory'
+export const getInventoryWithFilters = urlBase + 'inventory/getInventory-filter'
+
+
+// Dashboard
+
+export const getAllBloodData = urlBase + 'dashboard/bloodGroup-data-all'
+
+
 
 
 

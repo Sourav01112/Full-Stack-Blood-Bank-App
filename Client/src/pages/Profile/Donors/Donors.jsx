@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GetAllDonorsOfOrganization } from "../../../api/users";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Table, message, Input } from "antd";
+import { Button, Table, message, Input, Skeleton } from "antd";
 import { SetLoading } from "../../../redux/loaderSlice";
 import { getDateFormat } from "../../../utils/helpers";
 
@@ -12,9 +12,11 @@ export const Donors = () => {
   const [inputTyped, setInputTyped] = useState();
   const [searchError, setSearchError] = useState("");
   const [searchPerformed, setSearchPerformed] = useState(false);
+  const [loading, setLoading] = React.useState(true);
+
   const { currentUser } = useSelector((state) => state.users);
-  console.log("currentUser--->",currentUser);
-  const orgName = currentUser.organizationName
+  console.log("currentUser--->", currentUser);
+  const orgName = currentUser.organizationName;
 
   const dispatch = useDispatch();
 
@@ -48,7 +50,7 @@ export const Donors = () => {
 
   const getData = async () => {
     try {
-      dispatch(SetLoading(true));
+      // dispatch(SetLoading(true));
 
       const json = {
         page: 1,
@@ -59,17 +61,22 @@ export const Donors = () => {
       if (inputTyped) {
         json.search.bloodGroup = inputTyped;
       }
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       const response = await GetAllDonorsOfOrganization(json);
-      console.log("@@##$@#@$$%@", response);
-      dispatch(SetLoading(false));
+      // console.log("@@##$@#@$$%@", response);
+      // dispatch(SetLoading(false));
 
       if (response?.data?.aggregationResult?.length > 0 && response?.success) {
+        setLoading(false);
+
         const donorDeatilsInsideResponse =
           response?.data?.aggregationResult?.map((item) => item._id);
         message.success(response.message);
         setData(donorDeatilsInsideResponse);
       } else if (response?.data?.aggregationResult?.length == 0) {
+        setLoading(false);
+
         // console.log("empty");
         setSearchError("No matching data found.");
         setData([]);
@@ -78,7 +85,7 @@ export const Donors = () => {
       }
     } catch (error) {
       message.error(error.message);
-      dispatch(SetLoading(false));
+      // dispatch(SetLoading(false));
     }
   };
   useEffect(() => {
@@ -127,14 +134,17 @@ export const Donors = () => {
           {`This list provides detailed information about registered donors, including names, contact numbers, email IDs under ${orgName} organization.`}
         </div>
 
-        <Table columns={columns} dataSource={data} className="mt-7" />
+        {loading ? (
 
-        {/* {open && (
-          <InventoryForm open={open} setOpen={setOpen} reloadData={getData} />
-        )} */}
+          <div className="mt-5">
+            <Skeleton active title={true} paragraph={{ rows: 10 }} />
+          </div>
+        ) : (
+          <Table columns={columns} dataSource={data} className="mt-7" />
+        )}
+     
       </div>
     </div>
   );
 };
 
-//This compilation provides detailed information about registered individuals, including names, contact phone numbers, email IDs, and registration dates

@@ -60,7 +60,7 @@ export const ProtectedPage = ({ children }) => {
         <div className=" flex justify-between  bg-blue-700 text-white px-5 py-4">
           <div>
             <h1
-              className="text-2xl"
+              className="text-2xl cursor-pointer"
               onClick={() => {
                 dispatch(SetLoading(true));
                 setTimeout(() => {

@@ -1,0 +1,252 @@
+* {
+  font-family: "Mulish", sans-serif;
+}
+
+.signupContainer {
+  box-sizing: border-box;
+  display: flex;
+  gap: 5%;
+  height: auto;
+  justify-content: center;
+}
+
+.signupContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.signupContainer > div {
+  display: flex;
+  justify-content: center;
+  width: 70%;
+  /* margin-top: 20px; */
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  gap: 4%;
+  border-radius: 20px;
+  height: 83vh !important;
+}
+
+#loginFormContainer > div {
+  height: 100% !important;
+}
+
+#forgotPasswordContainer > div {
+  margin-top: 20px;
+  height: 100% !important;
+}
+
+#resetPasswordContainer > div {
+  margin-top: 80px;
+  height: 70vh;
+}
+
+#changePasswordContainer > div {
+  margin-top: 80px;
+  height: 80vh;
+}
+
+.signupContainer > div > div {
+  width: 49%;
+}
+
+.signupImage {
+  margin: 40px;
+}
+
+.signupFormContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  left: 3%;
+  overflow-y: scroll;
+  height: 100% !important;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.signupFormContainer::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.signupContainer {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.signupHeading {
+  margin-top: 25px;
+  width: 70%;
+  text-align: left;
+}
+.signupHeading img {
+  margin-bottom: 25px;
+}
+
+.masaiLogo {
+  position: relative;
+  left: -15px;
+  margin-bottom: -10px;
+  margin-top: 10px;
+}
+
+.signupHeading > h1 {
+  color: #2e343d;
+  margin-bottom: 15px;
+  font-size: 30px;
+}
+
+.signupHeading > p {
+  font-size: 14px;
+  line-height: 25px;
+}
+
+.innerSignupFormContainer {
+  width: 70%;
+}
+
+.captchaDiv {
+  display: flex;
+  gap: 10%;
+}
+
+.captchaBox {
+  height: 45px;
+  width: 50%;
+  text-align: center;
+  background-image: url("../../public/Images/CaptchaBackground.jpg");
+}
+
+.captchaBox > p {
+  font-size: 20px;
+  margin-top: 8px;
+  letter-spacing: 5px;
+  font-weight: 600;
+  /* Disable Text Selection */
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+#submitButton {
+  font-weight: 600;
+  background-color: #1f2937;
+}
+
+@media (max-width: 320px) {
+  .signupContainer > div {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-top: 20px;
+    border-radius: 10px;
+    height: auto;
+  }
+
+  .signupContainer > div > div {
+    width: 90%;
+  }
+
+  #loginImageDiv {
+    width: 60%;
+    position: relative;
+    left: 50%;
+  }
+
+  #forgotPasswordContainer > div {
+    margin-top: 20px;
+    height: auto;
+  }
+
+  #resetPasswordContainer > div {
+    margin-top: 20px;
+    height: auto;
+  }
+
+  .signupImage {
+    width: 80%;
+    /* margin: 10px 20px; */
+  }
+
+  .signupHeading {
+    /* margin-top: 5px; */
+    width: 90%;
+  }
+
+  .signupHeading > h1 {
+    font-size: 23px;
+  }
+
+  .signupHeading > p {
+    font-size: 12px;
+  }
+
+  .headsupLogo {
+    position: relative;
+    left: 50px;
+    margin-bottom: -10px;
+  }
+
+  .innerSignupFormContainer {
+    width: 90%;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 580px) {
+  .signupContainer > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 10px;
+    height: auto;
+  }
+
+  .signupContainer > div > div {
+    width: 100%;
+  }
+
+  #loginImageDiv {
+    width: 70%;
+    position: relative;
+  }
+
+  #forgotPasswordContainer > div {
+    margin-top: 50px;
+    height: auto;
+  }
+
+  #resetPasswordContainer > div {
+    margin-top: 20px;
+    height: auto;
+  }
+
+  .signupImage {
+    width: 100%;
+    margin: 20px 20px;
+  }
+
+  .signupHeading {
+    margin-top: 10px;
+    width: 90%;
+    font-size: 12px;
+  }
+
+  .signupHeading > img {
+    border: 2px solid red !important;
+  }
+
+  .signupHeading > h1 {
+    font-size: 14px;
+  }
+
+  .masaiLogo {
+    position: relative;
+    left: 100px;
+    margin-bottom: -100px;
+  }
+
+  .innerSignupFormContainer {
+    width: 90%;
+  }
+}

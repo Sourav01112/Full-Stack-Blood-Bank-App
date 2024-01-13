@@ -1,6 +1,6 @@
 
 import { axiosInstance } from ".";
-import { register, login, getcurrentuser, getAllDonorsOfOrg, getAllHospOfOrg, getAllOrgForDonor, getAllOrgForHospital, } from "./constant";
+import { register, login, getcurrentuser, getAllDonorsOfOrg, getAllHospOfOrg, getAllOrgForDonor, getAllOrgForHospital, forgotPassword, resetPassword, } from "./constant";
 
 
 export const RegisteredUser = async (payload) => {
@@ -21,6 +21,15 @@ export const LoginUser = async (payload) => {
   return response;
 };
 
+export const ResetPasswordUser = async (payload) => {
+  const response = await axiosInstance(
+    "patch",
+    resetPassword, 
+    payload
+  );
+  return response;
+};
+
 export const GetCurrentUser = async () => {
   const response = await axiosInstance(
     "get",
@@ -29,6 +38,14 @@ export const GetCurrentUser = async () => {
   return response;
 };
 
+export const ForgotPasswordUser = async (payload) => {
+  const response = await axiosInstance(
+    "post",
+    forgotPassword,
+    payload
+  );
+  return response;
+};
 
 export const GetAllDonorsOfOrganization = async (payload) => {
   const response = await axiosInstance(

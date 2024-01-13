@@ -8,7 +8,7 @@ import { SetLoading } from "../../../redux/loaderSlice";
 
 function InventoryForm({ open, setOpen, reloadData }) {
   const { currentUser } = useSelector((store) => store.users);
-  console.log('@@@@',currentUser);
+  // console.log('@@@@',currentUser);
   const [inventoryType, setInventoryType] = useState("Incoming");
   const [form] = useForm();
   const dispatch = useDispatch();

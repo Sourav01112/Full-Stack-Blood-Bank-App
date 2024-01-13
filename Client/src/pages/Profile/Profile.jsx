@@ -46,14 +46,16 @@ export const Profile = () => {
       {currentUser?.userType == "donor" && (
         <>
           <Tabs
-            defaultActiveKey="2"
+            defaultActiveKey="1"
             type="card"
             size="large"
             tabBarGutter={5}
             animated={{ inkBar: true, tabPane: true }}
           >
             <TabPane tab="Donations" key="1">
-              Here donationS
+            <InventoryComponent
+                filters={{ inventoryType: "Incoming",   userType : "donor" }}
+              />
             </TabPane>
 
             <TabPane tab="Organization" key="2">
@@ -74,8 +76,8 @@ export const Profile = () => {
           >
             <TabPane tab="Consumptions" key="1">
               <InventoryComponent
-                filters={{ inventoryType: "Outgoing" }}
-                userType="hospital"
+                filters={{ inventoryType: "Outgoing",  userType:"hospital" }}
+               
               />
             </TabPane>
 

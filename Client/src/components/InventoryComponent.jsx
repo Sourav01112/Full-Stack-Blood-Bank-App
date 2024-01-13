@@ -7,8 +7,8 @@ import { getDateFormat } from "../utils/helpers";
 
 export const InventoryComponent = ({ filters, userType }) => {
   console.log("filters", filters);
-  console.log("userType", userType);
   const { currentUser } = useSelector((state) => state.users);
+  console.log("currentUser", currentUser);
 
   const hospitalName = currentUser.hospitalName;
   const donorName = currentUser.name;
@@ -43,8 +43,7 @@ export const InventoryComponent = ({ filters, userType }) => {
       render: (text) => text + " ml",
     },
     {
-      title: "Ref",
-      // dataIndex: "  Ref",
+      title: currentUser?.userType === "hospital" ? "Source" : "Toward",
       render: (text, record) => record.organization.organizationName,
     },
     {
@@ -58,6 +57,11 @@ export const InventoryComponent = ({ filters, userType }) => {
       render: (text) => getDateFormat(text),
     },
   ];
+
+  if (currentUser?.userType == "hospital" || currentUser?.userType == "donor") {
+    // remove inventory type column
+    columns.splice(1, 1);
+  }
 
   const getData = async () => {
     try {
