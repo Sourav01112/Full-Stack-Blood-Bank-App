@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import InventoryForm from "./InventoryForm";
-import { Button, Table, message, Input } from "antd";
+import { Button, Table, message, Input, Badge, Tag } from "antd";
 import { useDispatch } from "react-redux";
 import { GetInventory } from "../../../api/inventory";
 import { SetLoading } from "../../../redux/loaderSlice";
@@ -20,10 +20,22 @@ export const Inventory = () => {
       title: "S.No",
       render: (text, record, index) => index + 1,
     },
+
     {
       title: "Inventory Type",
       dataIndex: "inventoryType",
+      render: (record) => {
+        let color = record === "Outgoing" ? "volcano" : "green";
+        return (
+          <span>
+            <Tag color={color} key={record}>
+              {record.toUpperCase()}
+            </Tag>
+          </span>
+        );
+      },
     },
+
     {
       title: "Blood Group",
       dataIndex: "bloodGroup",
@@ -104,8 +116,6 @@ export const Inventory = () => {
     }
   };
 
- 
-
   return (
     <div>
       <div>
@@ -129,16 +139,22 @@ export const Inventory = () => {
             )
           : null}
 
-          <div className="mt-4 text-blue-900">
-            {`This list compiles comprehensive information about the utilization of blood donations, encompassing details such as blood group types and quantities. It covers transactions involving blood exchanges among diverse entities, including Blood Bank Organizations, Hospitals, and Individual Donors`}
-          </div>
-        
-    
+        <div className="mt-4 text-blue-900">
+          {`This list compiles comprehensive information about the utilization of blood donations, encompassing details such as blood group types and quantities. It covers transactions involving blood exchanges among diverse entities, including Blood Bank Organizations, Hospitals, and Individual Donors`}
+        </div>
 
-        <Table columns={columns} dataSource={data} className="mt-7" />
+        <Table  // columns={columns}
+          dataSource={data}
+          className="mt-7"
+          bordered={true}
+          columns={columns.map((column) => ({
+            ...column,
+            // Customize header style for all columns
+            title: <div style={{ color: "#a54630 " }}>{column.title}</div>,
+          }))}/>
 
         {open && (
-          <InventoryForm open={open} setOpen={setOpen} reloadData={getData} />
+          <InventoryForm open={open} setOpen={setOpen} reloadData={getData} bordered={true}/>
         )}
       </div>
     </div>

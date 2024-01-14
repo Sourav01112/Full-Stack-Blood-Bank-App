@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import "../../Styles/confirmForgetReset.css";
+import "../../styles/confirmForgetReset.css";
 
 const ResetPasswordSuccess = () => {
   const navigate = useNavigate();

@@ -47,29 +47,27 @@ export const Login = () => {
 
       // console.log("response inside login", response)
       if (response.success) {
-        // console.log("1")
-
+        // console.log("1");
         message.success(response.message);
         localStorage.setItem("login-Token", response.token);
         form.resetFields();
         navigate("/");
       } else if (!type) {
-        // console.log("2")
-
+        // console.log("2");
         message.error("Please type correct password");
         form.resetFields();
       } else if (!response.success) {
-        // console.log("3")
-
+        // console.log("3");
         if (response.status == 404) {
           message.error(response?.message);
         } else if (response.status == 203) {
           message.error(response?.message);
+        } else {
+          message.error(response?.response?.data?.message);
         }
-        // message.error(response?.response?.data?.message);
         form.resetFields();
       } else {
-        // console.log("4")
+        // console.log("4");
 
         message.error(response.message);
         form.resetFields();
@@ -171,7 +169,7 @@ export const Login = () => {
           </Button>
 
           <Link to="/register" className=" text-center text-gray-500">
-          Not yet registered?{" "}
+            Not yet registered?{" "}
             <strong className="text-red-500">Sign up now</strong>
           </Link>
           <Link to="/forgotPassword" className="text-center text-black">

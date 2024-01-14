@@ -2,9 +2,9 @@ import React from "react";
 // import { GetInventoryWithFilters } from "../apicalls/inventory";
 import { useDispatch } from "react-redux";
 import { getDateFormat } from "../utils/helpers";
-// import { SetLoading } from "../redux/loaderSlice";
-import { Skeleton, Table, message } from "antd";
+import { Badge, Skeleton, Table, Tag, message } from "antd";
 import { GetInventoryWithFilters } from "../api/inventory";
+import "../styles/custom.style.css";
 
 export const InventoryTableHome = ({ filters, userType }) => {
   // console.log("----userType in InventoryTableHome ----  ", userType);
@@ -14,9 +14,22 @@ export const InventoryTableHome = ({ filters, userType }) => {
   const dispatch = useDispatch();
   const columns = [
     {
+      title: "S.No",
+      render: (text, record, index) => index + 1,
+    },
+    {
       title: "Inventory Type",
       dataIndex: "inventoryType",
-      // render: (text) => text.toUpperCase(),
+      render: (record) => {
+        let color = record === "Outgoing" ? "volcano" : "green";
+        return (
+          <span>
+            <Tag color={color} key={record}>
+              {record.toUpperCase()}
+            </Tag>
+          </span>
+        );
+      },
     },
     {
       title: "Blood Group",
@@ -57,7 +70,8 @@ export const InventoryTableHome = ({ filters, userType }) => {
     columns[2].title = "Organization Name";
 
     // date column should be renamed taken date
-    columns[3].title = userType === "hospital" ? "Consumption Date" : "Donated Date";
+    columns[3].title =
+      userType === "hospital" ? "Consumption Date" : "Donated Date";
   }
 
   const getData = async () => {
@@ -74,7 +88,7 @@ export const InventoryTableHome = ({ filters, userType }) => {
       const response = await GetInventoryWithFilters({ json, filters });
 
       console.log("response", response);
-      setLoading(false)
+      setLoading(false);
       // dispatch(SetLoading(false));
       if (response.success) {
         setData(response.data.docs);
@@ -90,21 +104,37 @@ export const InventoryTableHome = ({ filters, userType }) => {
   React.useEffect(() => {
     getData();
   }, []);
+
+  // const getRowClassName = (record) => {
+  //   return record.inventoryType === "Incoming" ? "incoming-row" : "outgoing-row";
+  // };
+
+
   return (
     <div>
       {loading ? (
-        // Show skeleton loading when data is being fetched
-        <div className="mt-5">
-          <Skeleton
-            active
-            title={true}
-            paragraph={{ rows: 10 }}
-          />
+        <div className="m-8">
+          <Skeleton active title={true} paragraph={{ rows: 10 }} />
           {/* <Skeleton active /> */}
         </div>
       ) : (
-        // Show the Table component when data is available
-        <Table columns={columns} dataSource={data} className="mt-7" />
+       
+        <Table
+          // columns={columns}
+          dataSource={data}
+          className="mt-7"
+          bordered={true}
+          columns={columns.map((column) => ({
+            ...column,
+            // Customize header style for all columns
+            title: <div style={{ color: "#a54630 " }}>{column.title}</div>,
+          }))}
+
+
+
+      
+
+        />
       )}
     </div>
   );

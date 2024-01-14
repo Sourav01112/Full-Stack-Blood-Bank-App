@@ -1,5 +1,6 @@
 import { Button, Form, Spin, Input, message } from "antd";
-import "../../Styles/signupSignin.css";
+// import "../../Styles/signupSignin.css";
+import "../../styles/signupSignin.css"
 import { LockOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -62,7 +63,7 @@ const ResetPassword = () => {
                 className="masaiLogo"
                 width={"50%"}
                 alt="masai logo"
-                style={{marginLeft : '27%'}}
+                style={{marginLeft : '28%'}}
               />
               <h1>Reset Password</h1>
               <p>

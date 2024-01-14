@@ -183,7 +183,16 @@ export const Organization = ({ userType }) => {
           </div>
         )}
 
-        <Table columns={columns} dataSource={data} className="mt-7" />
+        <Table // columns={columns}
+          dataSource={data}
+          className="mt-7"
+          bordered={true}
+          columns={columns.map((column) => ({
+            ...column,
+            // Customize header style for all columns
+            title: <div style={{ color: "#a54630 " }}>{column.title}</div>,
+          }))}
+        />
 
         {/* {open && (
           <InventoryForm open={open} setOpen={setOpen} reloadData={getData} />

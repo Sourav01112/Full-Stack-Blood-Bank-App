@@ -1,5 +1,6 @@
 import { Button } from "antd";
-import "../../Styles/confirmForgetReset.css";
+// import "../../Styles/confirmForgetReset.css";
+import '../../styles/confirmForgetReset.css'
 import { Link } from "react-router-dom";
 
 const ForgotPasswordMailSent = () => {

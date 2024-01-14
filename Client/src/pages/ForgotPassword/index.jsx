@@ -1,6 +1,8 @@
 import { Button, Col, Form, message, Input, Row, Spin } from "antd";
 import React, { useEffect, useState } from "react";
-import "../../Styles/signupSignin.css";
+// import "../../Styles/signupSignin.css";
+import '../../styles/signupSignin.css'
+
 import { MailOutlined, RedoOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

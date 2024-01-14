@@ -1,4 +1,4 @@
-import { Button, Input, Table, message } from "antd";
+import { Badge, Button, Input, Table, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SetLoading } from "../redux/loaderSlice";
@@ -30,7 +30,16 @@ export const InventoryComponent = ({ filters, userType }) => {
     {
       title: "Inventory Type",
       dataIndex: "inventoryType",
-      render: (text) => text.toUpperCase(),
+      // render: (text) => text.toUpperCase(),
+
+      render: (record) => {
+        console.log("inventroiy", record);
+        return record == "Incoming" ? (
+          <Badge status="success" text="Incoming" />
+        ) : (
+          <Badge status="error" text="Outgoing" />
+        );
+      },
     },
     {
       title: "Blood Group",
@@ -142,7 +151,17 @@ export const InventoryComponent = ({ filters, userType }) => {
           </div>
         )}
 
-        <Table columns={columns} dataSource={data} className="mt-7" />
+        <Table
+          // columns={columns}
+          dataSource={data}
+          className="mt-7"
+          bordered={true}
+          columns={columns.map((column) => ({
+            ...column,
+            // Customize header style for all columns
+            title: <div style={{ color: "#a54630 " }}>{column.title}</div>,
+          }))}
+        />
 
         {open && (
           <InventoryForm open={open} setOpen={setOpen} reloadData={getData} />
@@ -151,3 +170,5 @@ export const InventoryComponent = ({ filters, userType }) => {
     </div>
   );
 };
+
+// bordered={true}

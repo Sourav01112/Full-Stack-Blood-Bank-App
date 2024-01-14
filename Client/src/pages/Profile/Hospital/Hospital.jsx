@@ -128,11 +128,19 @@ export const Hospital = () => {
         </div>
 
         {loading ? (
-          <div className="mt-5">
+          <div className="mt-8">
             <Skeleton active title={true} paragraph={{ rows: 10 }} />
           </div>
         ) : (
-          <Table columns={columns} dataSource={data} className="mt-7" />
+          <Table  // columns={columns}
+          dataSource={data}
+          className="mt-7"
+          bordered={true}
+          columns={columns.map((column) => ({
+            ...column,
+            // Customize header style for all columns
+            title: <div style={{ color: "#a54630 " }}>{column.title}</div>,
+          }))}/>
         )}
       </div>
     </div>

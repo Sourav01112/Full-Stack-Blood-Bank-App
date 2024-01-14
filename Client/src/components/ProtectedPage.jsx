@@ -57,7 +57,7 @@ export const ProtectedPage = ({ children }) => {
     currentUser && (
       <div>
         {/* {header} */}
-        <div className=" flex justify-between  bg-blue-700 text-white px-5 py-4">
+        <div style={{ backgroundColor: '#666A86' }} className=" flex justify-between text-white px-5 py-4">
           <div>
             <h1
               className="text-2xl cursor-pointer"
