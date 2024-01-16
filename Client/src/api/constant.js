@@ -1,7 +1,7 @@
 
 // Production
 
-console.log("process.env", import.meta.env.VITE_REACT_APP_ENV)
+// console.log("process.env", import.meta.env.VITE_REACT_APP_ENV)
 
 let urlBase;
 
@@ -11,15 +11,6 @@ if (import.meta.env.VITE_REACT_APP_ENV === 'true') {
     urlBase = 'http://192.168.0.105:4500/api/';
 
 }
-
-console.log("URL--->.env", urlBase)
-
-
-// const urlBase = 'https://rich-ruby-sturgeon-garb.cyclic.app/api/'
-// const urlBase = 'http://localhost:4500/api/'
-// 
-/*  Local */
-
 
 
 // Users

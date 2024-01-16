@@ -5,8 +5,7 @@ import { SetLoading } from "../../redux/loaderSlice";
 import { Skeleton, message } from "antd";
 import { GetAllBloodData } from "../../api/dashboard";
 import { InventoryTableHome } from "../../components/InventoryTable";
-import BloodGroupCards from "../../components/BloodGroupCard";
-// import { CommonDataCard } from "../../components/CommonDataCard";
+import {BloodGroupCards} from "../../components/BloodGroupCard";
 
 
 export const Home = () => {

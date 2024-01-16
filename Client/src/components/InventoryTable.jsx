@@ -83,7 +83,7 @@ export const InventoryTableHome = ({ filters, userType }) => {
         limit: 5,
         search: {},
       };
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
       const response = await GetInventoryWithFilters({ json, filters });
 

@@ -3,7 +3,7 @@ import { Card, Row, Col } from "antd";
 import "../styles/custom.style.css";
 const { Meta } = Card;
 
-const BloodGroupCards = ({ bloodGroupsData }) => {
+export const BloodGroupCards = ({ bloodGroupsData }) => {
   const colours = [
     "#D7DAE5",
     "#ADD8E6",
@@ -29,7 +29,8 @@ const BloodGroupCards = ({ bloodGroupsData }) => {
                 margin: "-8px",
                 borderRadius: "8px",
                 boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                transition: "transform 0.4s, background-color 0.3s, color 0.3s, z-index 0.3s",
+                transition:
+                  "transform 0.4s, background-color 0.3s, color 0.3s, z-index 0.3s",
               }}
               cover={
                 <div className="card-cover">
@@ -39,14 +40,20 @@ const BloodGroupCards = ({ bloodGroupsData }) => {
                 </div>
               }
             >
-              <Meta title="Total In" description={`${bloodGroup.totalIN} ML`} />
               <Meta
+                style={{ marginBottom: "5px" }}
+                title="Total In"
+                description={`${bloodGroup.totalIN} ML`}
+              />
+              <Meta
+                style={{ marginBottom: "5px" }}
                 title="Total Out"
                 description={`${bloodGroup.totalOUT} ML`}
               />
               <Meta
+                style={{ marginBottom: "5px" }}
                 title="Available"
-                description={`${bloodGroup.avaialableQuantity} ML`}
+                description={`${bloodGroup.avaialbleQuantity} ML`}
               />
             </Card>
           </Col>

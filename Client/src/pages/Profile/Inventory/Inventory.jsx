@@ -10,6 +10,7 @@ export const Inventory = () => {
   const [data, setData] = useState([]);
   const [inputTyped, setInputTyped] = useState();
   const [searchError, setSearchError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
 
   const dispatch = useDispatch();
@@ -72,18 +73,30 @@ export const Inventory = () => {
     try {
       dispatch(SetLoading(true));
 
-      const json = {
-        page: 1,
-        limit: 50,
-        search: {},
-      };
+      var json;
 
-      if (inputTyped) {
-        json.search.bloodGroup = inputTyped;
+      if (inputTyped == undefined) {
+        json = {
+          page: 1,
+          limit: 50,
+          search: {},
+        };
+      } else {
+        json = {
+          page: 1,
+          limit: 50,
+          search: {
+            $text: {
+              $search: inputTyped,
+            },
+          },
+        };
       }
 
+      console.log("inputTderer", inputTyped);
+
       const response = await GetInventory(json);
-      console.log("response getinventory", response);
+      console.log("response?.data?.docs?.length", response?.data?.docs);
       dispatch(SetLoading(false));
       if (response?.data?.docs?.length > 0 && response?.success) {
         console.log("response in here", response);
@@ -105,7 +118,10 @@ export const Inventory = () => {
   }, []);
 
   const handleSearchChange = (event) => {
+    console.log("event", event.target.value);
     setInputTyped(event.target.value);
+    // getData();
+
     setSearchError("");
   };
 
@@ -119,18 +135,31 @@ export const Inventory = () => {
   return (
     <div>
       <div>
-        <div className="flex justify-between">
-          <Input
-            value={inputTyped}
-            onChange={handleSearchChange}
-            onKeyDown={handleKeyPress}
-            placeholder="Search any data"
-            style={{ width: "200px" }}
-          />
+        <div className="flex justify-between w-72">
+          <div>
+            <Button type="default" onClick={() => setOpen(true)}>
+              Add Inventory
+            </Button>
+          </div>
 
-          <Button type="default" onClick={() => setOpen(true)}>
-            Add Inventory
-          </Button>
+          <div className="flex flex-row">
+            <Input
+              value={inputTyped}
+              onChange={handleSearchChange}
+              onKeyDown={handleKeyPress}
+              placeholder="Search any data"
+              style={{ width: "200px" }}
+            />
+
+            <Button
+              type="default"
+              onClick={() => {
+                getData();
+              }}
+            >
+              {isLoading ? "Loading..." : "Search"}
+            </Button>
+          </div>
         </div>
 
         {searchPerformed == true
@@ -143,18 +172,23 @@ export const Inventory = () => {
           {`This list compiles comprehensive information about the utilization of blood donations, encompassing details such as blood group types and quantities. It covers transactions involving blood exchanges among diverse entities, including Blood Bank Organizations, Hospitals, and Individual Donors`}
         </div>
 
-        <Table  // columns={columns}
+        <Table 
           dataSource={data}
           className="mt-7"
           bordered={true}
           columns={columns.map((column) => ({
             ...column,
-            // Customize header style for all columns
             title: <div style={{ color: "#a54630 " }}>{column.title}</div>,
-          }))}/>
+          }))}
+        />
 
         {open && (
-          <InventoryForm open={open} setOpen={setOpen} reloadData={getData} bordered={true}/>
+          <InventoryForm
+            open={open}
+            setOpen={setOpen}
+            reloadData={getData}
+            bordered={true}
+          />
         )}
       </div>
     </div>
