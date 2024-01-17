@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { getDateFormat } from "../utils/helpers";
 import { Badge, Skeleton, Table, Tag, message, Button } from "antd";
 import { GetInventoryWithFilters } from "../api/inventory";
-import { PDFDownloadLink, Document, Page, Text } from "@react-pdf/renderer";
+// import { PDFDownloadLink, Document, Page, Text } from "@react-pdf/renderer";
 import "../styles/custom.style.css";
 
 export const InventoryTableHome = ({ filters, userType }) => {
@@ -87,8 +87,6 @@ export const InventoryTableHome = ({ filters, userType }) => {
 
 
 
-
-
       console.log("json inside Inventory table")
 
 
@@ -116,53 +114,23 @@ export const InventoryTableHome = ({ filters, userType }) => {
 
 
 
-  const MyDocument = ({ data }) => (
-    <Document>
-      <Page>
-        <Text>{/* Static content goes here */}</Text>
-        <Table
-          dataSource={data}
-          columns={columns}
-          bordered={true}
-          pagination={false}
-        />
-      </Page>
-    </Document>
-  );
+  // const MyDocument = ({ data }) => (
+  //   <Document>
+  //     <Page>
+  //       <Text>{/* Static content goes here */}</Text>
+  //       <Table
+  //         dataSource={data}
+  //         columns={columns}
+  //         bordered={true}
+  //         pagination={false}
+  //       />
+  //     </Page>
+  //   </Document>
+  // );
 
   // const getRowClassName = (record) => {
   //   return record.inventoryType === "Incoming" ? "incoming-row" : "outgoing-row";
   // };
-
-
-  // return (
-  //   <div>
-  //     {loading ? (
-  //       <div className="m-8">
-  //         <Skeleton active title={true} paragraph={{ rows: 10 }} />
-  //         {/* <Skeleton active /> */}
-  //       </div>
-  //     ) : (
-
-  //       <Table
-  //         // columns={columns}
-  //         dataSource={data}
-  //         className="mt-7"
-  //         bordered={true}
-  //         columns={columns.map((column) => ({
-  //           ...column,
-  //           // Customize header style for all columns
-  //           title: <div style={{ color: "#a54630 " }}>{column.title}</div>,
-  //         }))}
-
-
-
-
-
-  //       />
-  //     )}
-  //   </div>
-  // );
 
 
   return (
@@ -170,26 +138,56 @@ export const InventoryTableHome = ({ filters, userType }) => {
       {loading ? (
         <div className="m-8">
           <Skeleton active title={true} paragraph={{ rows: 10 }} />
+          {/* <Skeleton active /> */}
         </div>
       ) : (
-        <div>
-          <PDFDownloadLink
-            document={<MyDocument data={data} />}
-            fileName="inventory_report.pdf"
-          >
-            {({loading }) =>
-              loading ? (
-                "Loading document..."
-              ) : (
-                <Button type="primary" icon="download">
-                  Download PDF
-                </Button>
-              )
-            }
-          </PDFDownloadLink>
-          <Table dataSource={data} columns={columns} bordered={true} />
-        </div>
+
+        <Table
+          // columns={columns}
+          dataSource={data}
+          className="mt-7"
+          bordered={true}
+          columns={columns.map((column) => ({
+            ...column,
+            // Customize header style for all columns
+            title: <div style={{ color: "#a54630 " }}>{column.title}</div>,
+          }))}
+
+
+
+
+
+        />
       )}
     </div>
-  )
+  );
+
+
+  // return (
+  //   <div>
+  //     {loading ? (
+  //       <div className="m-8">
+  //         <Skeleton active title={true} paragraph={{ rows: 10 }} />
+  //       </div>
+  //     ) : (
+  //       <div>
+  //         <PDFDownloadLink
+  //           document={<MyDocument data={data} />}
+  //           fileName="inventory_report.pdf"
+  //         >
+  //           {({loading }) =>
+  //             loading ? (
+  //               "Loading document..."
+  //             ) : (
+  //               <Button type="primary" icon="download">
+  //                 Download PDF
+  //               </Button>
+  //             )
+  //           }
+  //         </PDFDownloadLink>
+  //         <Table dataSource={data} columns={columns} bordered={true} />
+  //       </div>
+  //     )}
+  //   </div>
+  // )
 };

@@ -4,6 +4,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import LoginImage1 from "../../assets/LoginImage1.jpg";
 import image1 from "../../../public/Images/image1.jpg";
 
+import {encodedLogin}  from '../../utils/EncodedImages/encodedLogin'
+
 import { LoginUser } from "../../api/users";
 import { useForm } from "antd/es/form/Form";
 import { useDispatch } from "react-redux";
@@ -14,24 +16,19 @@ const { Option } = Select;
 
 export const Login = () => {
   const [type, setType] = useState("donor");
-  const [form] = useForm();
+  const [form] = useForm(); 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
   const isDesiredRoute = location.pathname === "/login";
-  const backgroundClasses = isDesiredRoute ? "bg-wallpaper" : "";
+  // const backgroundClasses = isDesiredRoute ? "bg-wallpaper" : "";
 
   const onFinish = async (values) => {
     const { email, password } = values;
 
     try {
-      // loading state
       dispatch(SetLoading(true));
-
-      // delay of 1 second
-      await new Promise((resolve) => setTimeout(resolve, 700));
-      // Check if both email and password are missing
-
+      await new Promise((resolve) => setTimeout(resolve, 300));
       if (!password) {
         message.error("Please fill password");
         form.resetFields();
@@ -41,27 +38,20 @@ export const Login = () => {
         form.resetFields();
         return;
       }
-
-      // dispatch(SetLoading(true));
       const response = await LoginUser({
         ...values,
         userType: type,
       });
       dispatch(SetLoading(false));
-
-      // console.log("response inside login", response)
       if (response.success) {
-        // console.log("1");
         message.success(response.message);
         localStorage.setItem("login-Token", response.token);
         form.resetFields();
         navigate("/");
       } else if (!type) {
-        // console.log("2");
         message.error("Please type correct password");
         form.resetFields();
       } else if (!response.success) {
-        // console.log("3");
         if (response.status == 404) {
           message.error(response?.message);
         } else if (response.status == 203) {
@@ -71,15 +61,11 @@ export const Login = () => {
         }
         form.resetFields();
       } else {
-        // console.log("4");
-
         message.error(response.message);
         form.resetFields();
         message.warning(response.message);
       }
     } catch (error) {
-      // console.log("5")
-
       dispatch(SetLoading(false));
       message.error(error.message);
       form.resetFields();
@@ -98,23 +84,16 @@ export const Login = () => {
   return (
     <div className="flex h-screen">
       {/* Left Side: Photo */}
-      {/* <div
-        className="flex-1 bg-cover bg-center hidden lg:block"
-        style={{ backgroundImage: `url(${image1})` }}
-      ></div> */}
-
       <div
         class="flex-1 bg-cover bg-center hidden lg:block"
-        style={{ backgroundImage: `url(${image1})` }}
-      ></div>
-
+        style={{ backgroundImage: `url(${encodedLogin})` }}
+      >
+      </div>
       {/* Right Side: Login Form */}
-
       <div className="flex-1 p-8 flex items-center justify-center">
         <Form
           form={form}
           layout="vertical"
-          // className="bg-white rounded shadow-md p-8 max-w-md"
           className="bg-white rounded p-8 max-w-lg shadow-lg"
           style={{ width: "400px" }}
           onFinish={onFinish}

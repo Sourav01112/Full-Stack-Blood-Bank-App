@@ -5,13 +5,14 @@ import { SetLoading } from "../../redux/loaderSlice";
 import { Skeleton, message } from "antd";
 import { GetAllBloodData } from "../../api/dashboard";
 import { InventoryTableHome } from "../../components/InventoryTable";
-import {BloodGroupCards} from "../../components/BloodGroupCard";
-
+import { BloodGroupCards } from "../../components/BloodGroupCard";
 
 export const Home = () => {
   const { currentUser } = useSelector((state) => state.users);
   const { isLoading } = useSelector((store) => store.loaders);
   const [bloodGroupsData = [], setBloodGroupsData] = useState([]);
+  const [inputTyped, setInputTyped] = useState();
+
   const [loading, setLoading] = React.useState(true);
 
   const dispatch = useDispatch();
@@ -78,39 +79,7 @@ export const Home = () => {
           <>
             {currentUser?.userType === "organization" && (
               <div>
-                {/* <div className="grid grid-cols-4 gap-5 mb-8 mt-8"> */}
-                  <BloodGroupCards bloodGroupsData={bloodGroupsData} />
-
-                  {/* {bloodGroupsData.map((bloodGroup, index) => {
-                    const color = colours[index];
-                    return (
-                      <div
-                        className={`p-5 flex justify-between text-white rounded items-center`}
-                        style={{ backgroundColor: color }}
-                        key={index}
-                      >
-                        <h1 className="text-5xl uppercase">
-                          {bloodGroup.bloodGroup}
-                        </h1>
-                        <div className="flex flex-col justify-between gap-2">
-                          <div className="flex justify-between gap-5">
-                            <span>Total In</span>
-                            <span>{bloodGroup.totalIN} ML</span>
-                          </div>
-                          <div className="flex justify-between gap-5">
-                            <span>Total Out</span>
-                            <span>{bloodGroup.totalOUT} ML</span>
-                          </div>
-                          <div className="flex justify-between gap-5">
-                            <span>Available</span>
-                            <span>{bloodGroup.avaialbleQuantity} ML</span>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })} */}
-                {/* </div> */}
-
+                <BloodGroupCards bloodGroupsData={bloodGroupsData} />
                 <span className="text-xl text-gray-700 font-semibold">
                   Recent five records
                 </span>
@@ -119,10 +88,6 @@ export const Home = () => {
           </>
         )
       )}
-
-      {/*    <span className="text-xl text-gray-700 font-semibold">
-          Recent five records
-        </span> */}
 
       {/*  Cards */}
       {/* -------------------------------------- */}

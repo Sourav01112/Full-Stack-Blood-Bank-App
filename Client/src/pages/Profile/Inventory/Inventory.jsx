@@ -12,10 +12,9 @@ export const Inventory = () => {
   const [searchError, setSearchError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [searchPerformed, setSearchPerformed] = useState(false);
-
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
-  const [open, setOpen] = useState(false);
   const columns = [
     {
       title: "S.No",
@@ -93,13 +92,9 @@ export const Inventory = () => {
         };
       }
 
-      console.log("hittitng00-----------");
-
       const response = await GetInventory(json);
-      console.log("response?.data?.docs?.length", response?.data?.docs);
       dispatch(SetLoading(false));
       if (response?.data?.docs?.length > 0 && response?.success) {
-        console.log("response in here", response);
         setData(response?.data?.docs);
       } else if (response?.data?.docs?.length == 0) {
         setSearchError("No matching data found.");
@@ -118,10 +113,7 @@ export const Inventory = () => {
   }, []);
 
   const handleSearchChange = (event) => {
-    console.log("event", event.target.value);
     setInputTyped(event.target.value);
-    // getData();
-
     setSearchError("");
   };
 
@@ -134,63 +126,70 @@ export const Inventory = () => {
 
   return (
     <div>
-      <div>
-        <div className="flex justify-between w-72">
-          <div>
-            <Button type="default" onClick={() => setOpen(true)}>
-              Add Inventory
-            </Button>
-          </div>
-
-          <div className="flex flex-row">
-            <Input
-              value={inputTyped}
-              onChange={handleSearchChange}
-              onKeyDown={handleKeyPress}
-              placeholder="Search any data"
-              style={{ width: "200px" }}
-            />
-
-            <Button
-              type="default"
-              onClick={() => {
-                getData();
-              }}
-            >
-              {isLoading ? "Loading..." : "Search"}
-            </Button>
-          </div>
+      <div className="flex justify-between items-center w-full">
+        <div>
+          <Button
+            style={{ backgroundColor: "#6495ed ", color: "white" }}
+            // type="primary"
+            onClick={() => setOpen(true)}
+          >
+            Add Inventory
+          </Button>
+          {/* <Button type="primary" className="w-full" htmlType="submit">
+            LOGIN
+          </Button> */}
         </div>
 
-        {searchPerformed == true
-          ? searchError && (
-              <p style={{ color: "red", marginTop: "5px" }}>{searchError}</p>
-            )
-          : null}
-
-        <div className="mt-4 text-blue-900">
-          {`This list compiles comprehensive information about the utilization of blood donations, encompassing details such as blood group types and quantities. It covers transactions involving blood exchanges among diverse entities, including Blood Bank Organizations, Hospitals, and Individual Donors`}
-        </div>
-
-        <Table 
-          dataSource={data}
-          className="mt-7"
-          bordered={true}
-          columns={columns.map((column) => ({
-            ...column,
-            title: <div style={{ color: "#a54630 " }}>{column.title}</div>,
-          }))}
-        />
-
-        {open && (
-          <InventoryForm
-            open={open}
-            setOpen={setOpen}
-            reloadData={getData}
-            bordered={true}
+        <div className="flex items-center">
+          <Input
+            value={inputTyped}
+            onChange={handleSearchChange}
+            onKeyDown={handleKeyPress}
+            placeholder="Search any data"
+            // style={{ width: "200px", marginRight: "8px" }}
           />
-        )}
+
+          <Button
+            style={{ backgroundColor: "#6495ed ", color: "white"}}
+
+            // type="primary"
+            onClick={() => {
+              getData();
+            }}
+          >
+            {isLoading ? "Loading..." : "Search"}
+          </Button>
+        </div>
       </div>
+
+      {searchPerformed == true
+        ? searchError && (
+            <p style={{ color: "red", marginTop: "5px" }}>{searchError}</p>
+          )
+        : null}
+
+      <div className="mt-4 text-blue-900">
+        {`This list compiles comprehensive information about the utilization of blood donations, encompassing details such as blood group types and quantities. It covers transactions involving blood exchanges among diverse entities, including Blood Bank Organizations, Hospitals, and Individual Donors`}
+      </div>
+
+      <Table
+        dataSource={data}
+        className="mt-7"
+        bordered={true}
+        columns={columns.map((column) => ({
+          ...column,
+          title: <div style={{ color: "#a54630 " }}>{column.title}</div>,
+        }))}
+      />
+
+      {open && (
+        <InventoryForm
+          open={open}
+          setOpen={setOpen}
+          reloadData={getData}
+          bordered={true}
+        />
+      )}
     </div>
   );
 };
