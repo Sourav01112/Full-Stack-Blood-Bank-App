@@ -98,16 +98,25 @@ export const Organization = ({ userType }) => {
     try {
       dispatch(SetLoading(true));
 
-      const json = {
-        page: 1,
-        limit: 10,
-        search: {},
-      };
+      var json;
 
-      if (inputTyped) {
-        json.search.bloodGroup = inputTyped;
+      if (inputTyped == undefined) {
+        json = {
+          page: 1,
+          limit: 50,
+          search: {},
+        };
+      } else {
+        json = {
+          page: 1,
+          limit: 50,
+          search: {
+            $text: {
+              $search: inputTyped,
+            },
+          },
+        };
       }
-
       const response =
         (await userType) == "donor"
           ? await GetAllOrganizationsForDonor(json)
@@ -165,8 +174,8 @@ export const Organization = ({ userType }) => {
         </div>
         {searchPerformed == true
           ? searchError && (
-              <p style={{ color: "red", marginTop: "5px" }}>{searchError}</p>
-            )
+            <p style={{ color: "red", marginTop: "5px" }}>{searchError}</p>
+          )
           : null}
 
         {userType === "hospital" && (
@@ -177,9 +186,8 @@ export const Organization = ({ userType }) => {
 
         {userType === "donor" && (
           <div className="mt-4 text-blue-900">
-            {` This retrieves a list of all healthcare organizations that have received ${
-              donorName.split(" ")[0]
-            }'s blood donations.`}
+            {` This retrieves a list of all healthcare organizations that have received ${donorName.split(" ")[0]
+              }'s blood donations.`}
           </div>
         )}
 
@@ -201,8 +209,7 @@ export const Organization = ({ userType }) => {
         {showHistoryModal && (
           <Modal
             title={
-              `${
-                userType == "donor" ? "Donation History" : "Consumption History"
+              `${userType == "donor" ? "Donation History" : "Consumption History"
               } in ${selectedOrganization?.organizationName} `
 
               //   userType == `{ req.body.json.searchdonor" ? "Donation History" : "Consumption History" + selectedOrganization?.organizationName

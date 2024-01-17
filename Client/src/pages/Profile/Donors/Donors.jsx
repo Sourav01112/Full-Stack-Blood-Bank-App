@@ -52,14 +52,24 @@ export const Donors = () => {
     try {
       // dispatch(SetLoading(true));
 
-      const json = {
-        page: 1,
-        limit: 10,
-        search: {},
-      };
+      var json;
 
-      if (inputTyped) {
-        json.search.bloodGroup = inputTyped;
+      if (inputTyped == undefined) {
+        json = {
+          page: 1,
+          limit: 50,
+          search: {},
+        };
+      } else {
+        json = {
+          page: 1,
+          limit: 50,
+          search: {
+            $text: {
+              $search: inputTyped,
+            },
+          },
+        };
       }
       await new Promise((resolve) => setTimeout(resolve, 1000));
 

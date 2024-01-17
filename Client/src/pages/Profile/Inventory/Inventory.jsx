@@ -93,7 +93,7 @@ export const Inventory = () => {
         };
       }
 
-      console.log("inputTderer", inputTyped);
+      console.log("hittitng00-----------");
 
       const response = await GetInventory(json);
       console.log("response?.data?.docs?.length", response?.data?.docs);

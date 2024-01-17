@@ -76,15 +76,27 @@ export const InventoryComponent = ({ filters, userType }) => {
     try {
       dispatch(SetLoading(true));
 
-      const json = {
-        page: 1,
-        limit: 10,
-        search: {},
-      };
+      var json;
 
-      if (inputTyped) {
-        json.search.bloodGroup = inputTyped;
+      if (inputTyped == undefined) {
+        json = {
+          page: 1,
+          limit: 50,
+          search: {},
+        };
+      } else {
+        json = {
+          page: 1,
+          limit: 50,
+          search: {
+            $text: {
+              $search: inputTyped,
+            },
+          },
+        };
       }
+
+      console.log("json inside Inventory COmponent")
 
       const response = await GetInventoryWithFilters({ json, filters });
       // console.log("response getinventory", response);
@@ -156,7 +168,7 @@ export const InventoryComponent = ({ filters, userType }) => {
           dataSource={data}
           className="mt-7"
           bordered={true}
-          columns={columns.map((column) => ({
+          columns={columns.map((column, index) => ({
             ...column,
             // Customize header style for all columns
             title: <div style={{ color: "#a54630 " }}>{column.title}</div>,
