@@ -1,13 +1,16 @@
 
-let urlBase;
-if (import.meta.env.VITE_REACT_APP_ENV === 'true') {
-    // Production
-    urlBase = 'https://rich-ruby-sturgeon-garb.cyclic.app/api/'
-} else if (import.meta.env.VITE_REACT_APP_ENV === 'false') {
-    // Development
-    urlBase = 'http://192.168.0.105:4500/api/';
+// let urlBase;
+// if (import.meta.env.VITE_REACT_APP_ENV === 'true') {
+//     // Production
+//     urlBase = 'https://rich-ruby-sturgeon-garb.cyclic.app/api/'
+// } else if (import.meta.env.VITE_REACT_APP_ENV === 'false') {
+//     // Development
+//     urlBase = 'http://192.168.0.105:4500/api/';
 
-}
+// }
+
+   let urlBase = 'https://rich-ruby-sturgeon-garb.cyclic.app/api/'
+   
 
 // Users
 export const register = urlBase + 'users/register'

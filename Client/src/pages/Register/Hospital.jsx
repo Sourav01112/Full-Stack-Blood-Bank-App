@@ -11,15 +11,14 @@ export const Hospital = ({
 }) => {
   const { Step } = Steps;
 
+
+  console.log("currentsteo in hospital", currentStep)
+
   return (
     <>
       {currentStep === 1 && (
         <>
-          <Steps current={currentStep - 1} className="mb-4">
-            <Step title="Step 1" />
-            <Step title="Step 2" />
-            <Step title="Step 3" />
-          </Steps>
+
 
           <Form.Item
             label={type === "hospital" ? "Hospital Name" : "Organization Name"}
@@ -51,17 +50,19 @@ export const Hospital = ({
           >
             <Input />
           </Form.Item>
+
+          {/* Stepper */}
+          <Steps current={currentStep - 1} className="mb-4 mt-4">
+            <Step title="Step 1" />
+            <Step title="Step 2" />
+            <Steps title="Step 3" />
+          </Steps>
         </>
       )}
 
       {currentStep === 2 && (
         <>
-          {/* Stepper */}
-          <Steps current={currentStep - 1} className="mb-4">
-            <Step title="Step 1" />
-            <Step title="Step 2" />
-            <Steps title="Step 3" />
-          </Steps>
+
           <Form.Item
             label="Phone"
             name="phone"
@@ -86,16 +87,18 @@ export const Hospital = ({
           >
             <TextArea className="custom-password-input" />
           </Form.Item>
+          {/* Stepper */}
+          <Steps current={currentStep - 1} className="mb-4 mt-4">
+            <Step title="Step 1" />
+            <Step title="Step 2" />
+            <Steps title="Step 3" />
+          </Steps>
         </>
       )}
 
       {currentStep === 3 && (
         <>
-          <Steps current={currentStep - 1} className="mb-4">
-            <Step title="Step 1" />
-            <Step title="Step 2" />
-            <Step title="Step 3" />
-          </Steps>
+
           <Form.Item
             hasFeedback
             label="Password"
@@ -104,6 +107,11 @@ export const Hospital = ({
           >
             <Input.Password className="custom-password-input" />
           </Form.Item>
+          <Steps current={currentStep - 1} className="mb-4 mt-4">
+            <Step title="Step 1" />
+            <Step title="Step 2" />
+            <Step title="Step 3" />
+          </Steps>
         </>
       )}
     </>
