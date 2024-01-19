@@ -89,6 +89,17 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    owner: {
+      type: String,
+      type: String,
+      required: function () {
+        if (this.userType === "organization" || this.userType === "hospital") {
+          return true;
+        } else {
+          return false;
+        }
+      },
+    }
   },
 
   //Time Stamp
