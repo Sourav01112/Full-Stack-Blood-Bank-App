@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const mongoosePaginate = require('mongoose-paginate-v2');
+// var aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 
 const inventorySchema = new mongoose.Schema(
   {
@@ -11,7 +12,7 @@ const inventorySchema = new mongoose.Schema(
     bloodGroup: {
       type: String,
       required: true,
-       
+
     },
     quantity: {
       type: Number,
@@ -24,7 +25,7 @@ const inventorySchema = new mongoose.Schema(
     // getting ID with reference
     organization: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "organization",
+      ref: "users",
       required: true,
     },
     // if inventroryType is 'Outgoing' , then hospital will be set
@@ -52,6 +53,14 @@ const inventorySchema = new mongoose.Schema(
 );
 
 inventorySchema.plugin(mongoosePaginate);
+// inventorySchema.plugin(aggregatePaginate);
+
+inventorySchema.index({
+  inventoryType: 'text',
+  bloodGroup: 'text',
+  email: 'email'
+});
+
 const InventoryModel = mongoose.model("inventories", inventorySchema);
 
 module.exports = InventoryModel;
