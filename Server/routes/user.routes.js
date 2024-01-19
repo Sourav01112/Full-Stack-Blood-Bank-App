@@ -440,15 +440,6 @@ usersRouter.post("/forgotPassword", async (req, res) => {
     },
   });
 
-
-  // user: 'info@headsupcorporation.com',
-  // pass: 'jChfuR5QhEas',
-  // host: "smtp.zoho.com",
-  // port: 465,
-  // secure: true,
-  // Composing the email
-
-
   const mailOptions = {
     from: 'chaudharysourav.vats@gmail.com',
     to: email,
